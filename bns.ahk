@@ -46,10 +46,10 @@ CheckTime() {
 }
 
 ; 设置定时器，每分钟检查一次时间
-; SetTimer CheckTime, 58000  ; 60000 毫秒 = 1 分钟
+SetTimer CheckTime, 58000  ; 60000 毫秒 = 1 分钟
 
 ; 启动时立即检查一次时间（可选）
-; CheckTime()
+CheckTime()
 
 ; 保持脚本运行
 Persistent
