@@ -32,16 +32,12 @@ CheckTime() {
     if (currentTimeHourMinute = "0057") {
         BNSDailyAttendance()
         
-        ; 停止定时器，避免重复执行
-        SetTimer CheckTime, 0
     }
 
     ; 如果当前时间是 202504220057，领取B币券
     if (currentTimeYearMonthDayHourMinute = "202504220055") {
         BiliBiliMonthlyCoin()
         
-        ; 停止定时器，避免重复执行
-        SetTimer CheckTime, 0
     }
 }
 
@@ -102,4 +98,3 @@ LeftY() {
     Send "Y"
     Sleep 500  ;
 }
-
