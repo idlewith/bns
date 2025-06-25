@@ -3,6 +3,10 @@ CoordMode "ToolTip", "Screen"
 
 
 
+global ToggleLeftYClick := 0
+
+
+
 ::btw::by the way
 
 
@@ -11,12 +15,17 @@ CoordMode "ToolTip", "Screen"
     BNSDailyAttendance()
 }
 
-^+a::
+^+c::
 {
-    Loop 20
+    global ToggleLeftYClick := !ToggleLeftYClick
+
+    if (ToggleLeftYClick)
     {
-        LeftY()
-        Sleep 500
+        SetTimer LeftY, 500
+    }
+    else
+    {
+        SetTimer LeftY, 0
     }
 }
 
@@ -29,7 +38,7 @@ CheckTime() {
     currentTimeYearMonthDayHourMinute := FormatTime(A_Now, "yyMMddHHmm") ; 获取当前时间，格式为 yyMMddHHmm (24 小时制）
     
     ; 如果当前时间是 00:57，剑灵小助手打卡
-    if (currentTimeHourMinute = "0057") {
+    if (currentTimeHourMinute = "0031") {
         BNSDailyAttendance()
         
     }
@@ -75,7 +84,7 @@ Sleep 2000  ; 等待页面加载完成，时间可以根据实际情况调整
 ; 首页登录 
 ; 1409 862
 Click 1409, 862
-Sleep 5000  ;
+Sleep 8000  ;
 
 ; 我知道了 
 ; 1340, 986
@@ -92,8 +101,8 @@ Sleep 2000  ;
 
 LeftY() {
     ; Send "{LButton}" 
-    Sleep 500  ;
-    Click 1677, 1131
+    Sleep 500  
+    Click 2426, 1367 ; 创号
     Sleep 500  ;
     Send "Y"
     Sleep 500  ;
