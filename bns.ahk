@@ -38,13 +38,12 @@ CheckTime() {
     currentTimeYearMonthDayHourMinute := FormatTime(A_Now, "yyMMddHHmm") ; 获取当前时间，格式为 yyMMddHHmm (24 小时制）
     
     ; 如果当前时间是 00:57，剑灵小助手打卡
-    if (currentTimeHourMinute = "0031") {
-        BNSDailyAttendance()
-        
-    }
+    ; if (currentTimeHourMinute = "0031") {
+    ;     BNSDailyAttendance()
+    ; }
 
     ; 如果当前时间是 202504220057，领取B币券
-    if (currentTimeYearMonthDayHourMinute = "202504220055") {
+    if (currentTimeYearMonthDayHourMinute = "2507242301") {
         BiliBiliMonthlyCoin()
         
     }
