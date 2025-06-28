@@ -1,9 +1,12 @@
 #Requires AutoHotkey v2.0
 CoordMode "ToolTip", "Screen"
 
+; 剑灵进程名
+BNSNEOWinTitle := "ahk_exe BNSR.exe"
 
 
 global ToggleLeftYClick := 0
+global ToggleGuaJi := 0
 
 
 
@@ -32,7 +35,18 @@ global ToggleLeftYClick := 0
 
 !c::
 {
-    MoveToTaskZone()
+    ; MoveToTaskZone()
+
+    global ToggleGuaJi := !ToggleGuaJi
+
+    if (ToggleGuaJi)
+    {
+        SetTimer GuaJi, 100
+    }
+    else
+    {
+        SetTimer GuaJi, 0
+    }
 }
 
 
@@ -122,3 +136,14 @@ MoveToTaskZone() {
     Send "Y"
     Sleep 500
 }
+
+
+GuaJi() {
+    ControlSend "{Right Down}", , BNSNEOWinTitle
+    Sleep 50
+    ControlSend "{4}", , BNSNEOWinTitle
+    Sleep 50
+    ControlSend "{f}", , BNSNEOWinTitle
+    Sleep 50
+}
+
