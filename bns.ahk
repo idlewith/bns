@@ -13,6 +13,24 @@ global ToggleGuaJi := 0
 ::btw::by the way
 
 
+
+#HotIf WinActive(BNSNEOWinTitle)
+
+^v::
+{
+    textToSend := A_Clipboard       ; 获取待发送文本
+    
+    ; 逐字发送（规避游戏检测）
+    Loop Parse textToSend {
+        SendText A_LoopField      ; 无修饰符发送单个字符
+        Sleep 15                  ; 字符间延迟（防检测）
+    }
+}
+
+#HotIf
+
+
+
 ^+s::
 {
     BNSDailyAttendance()
@@ -35,18 +53,25 @@ global ToggleGuaJi := 0
 
 !c::
 {
-    ; MoveToTaskZone()
+    MoveToTaskZone()
 
-    global ToggleGuaJi := !ToggleGuaJi
 
-    if (ToggleGuaJi)
-    {
-        SetTimer GuaJi, 100
-    }
-    else
-    {
-        SetTimer GuaJi, 0
-    }
+    ; global ToggleGuaJi := !ToggleGuaJi
+
+    ; if (ToggleGuaJi)
+    ; {
+    ;     SetTimer HoldRightKey, 50
+    ;     SetTimer Press4F, 100
+
+    ;     ; SetTimer PressF, 100
+    ; }
+    ; else
+    ; {
+    ;     SetTimer HoldRightKey, 0
+    ;     SetTimer Press4F, 0
+        
+    ;     ; SetTimer PressF, 0
+    ; }
 }
 
 
@@ -138,12 +163,19 @@ MoveToTaskZone() {
 }
 
 
-GuaJi() {
+HoldRightKey() {
     ControlSend "{Right Down}", , BNSNEOWinTitle
-    Sleep 50
+}
+
+
+Press4F() {
     ControlSend "{4}", , BNSNEOWinTitle
-    Sleep 50
+    Sleep 100
     ControlSend "{f}", , BNSNEOWinTitle
-    Sleep 50
+}
+
+PressF() {
+    ControlSend "{f}", , BNSNEOWinTitle
+    Sleep 300
 }
 
