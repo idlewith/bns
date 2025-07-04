@@ -1,81 +1,47 @@
 #Requires AutoHotkey v2.0
+#Include %A_ScriptDir%\lib\bilibili.ahk
+#Include %A_ScriptDir%\lib\bnszs.ahk
+#Include %A_ScriptDir%\lib\constant.ahk
+#Include %A_ScriptDir%\lib\hang_up.ahk
+#Include %A_ScriptDir%\lib\upgrade.ahk
+#Include %A_ScriptDir%\lib\bns_clipboard.ahk
+
 CoordMode "ToolTip", "Screen"
 
-; 剑灵进程名
-BNSNEOWinTitle := "ahk_exe BNSR.exe"
-
-
-global ToggleLeftYClick := 0
-global ToggleGuaJi := 0
-
-
-
-::btw::by the way
+; 功能列表
+; - ctrl v 在剑灵游戏里面粘贴字符串
+; - 定时任务：小助手签到
+; - 定时任务：每个月领B币券
 
 
 
+; ctrl v 在剑灵游戏里面粘贴字符串
 #HotIf WinActive(BNSNEOWinTitle)
 
 ^v::
 {
-    textToSend := A_Clipboard       ; 获取待发送文本
-    
-    ; 逐字发送（规避游戏检测）
-    Loop Parse textToSend {
-        SendText A_LoopField      ; 无修饰符发送单个字符
-        Sleep 15                  ; 字符间延迟（防检测）
-    }
+    SendTextFromClipboard()
 }
 
 #HotIf
 
 
 
-^+s::
-{
-    BNSDailyAttendance()
-}
-
 ^+a::
 {
-    global ToggleLeftYClick := !ToggleLeftYClick
-
-    if (ToggleLeftYClick)
-    {
-        SetTimer LeftYCreateAccount, 500
-    }
-    else
-    {
-        SetTimer LeftYCreateAccount, 0
-    }
+    ToggleCreateAccount()
 }
 
 
 !c::
 {
     MoveToTaskZone()
-
-
-    ; global ToggleGuaJi := !ToggleGuaJi
-
-    ; if (ToggleGuaJi)
-    ; {
-    ;     SetTimer HoldRightKey, 50
-    ;     SetTimer Press4F, 100
-
-    ;     ; SetTimer PressF, 100
-    ; }
-    ; else
-    ; {
-    ;     SetTimer HoldRightKey, 0
-    ;     SetTimer Press4F, 0
-        
-    ;     ; SetTimer PressF, 0
-    ; }
+    ; ToggleKillBossAndPickThing()
+    ; ToggleCard()
 }
 
 
-
+; 实时检查任务
 ; 检查当前时间是否为目标时间（23:00）
 CheckTime() {
     ; 获取当前时间的小时和分钟 
@@ -102,80 +68,4 @@ CheckTime()
 
 ; 保持脚本运行
 Persistent
-
-
-
-
-
-BiliBiliMonthlyCoin() {
-    
-    ; 打开 Chrome 浏览器并访问指定网页
-    Run "chrome.exe https://account.bilibili.com/account/big/myPackage"
-}
-
-
-
-BNSDailyAttendance() {
-    
-; 打开 Chrome 浏览器并访问指定网页
-Run "chrome.exe https://tools.bnszs.com/manage/login?callback=/manage/center"
-
-; 等待浏览器打开并加载页面
-WinWaitActive "ahk_exe chrome.exe"
-Sleep 2000  ; 等待页面加载完成，时间可以根据实际情况调整
-
-
-; 首页登录 
-; 1409 862
-Click 1409, 862
-Sleep 8000  ;
-
-; 我知道了 
-; 1340, 986
-Click 1340, 986
-Sleep 1000  ;
-
-; 签到 
-; 461, 685
-Click 461, 685
-Sleep 2000  ;
-
-}
-
-
-LeftYCreateAccount() {
-    Sleep 500  
-    Click 2426, 1367 ; 创号
-    Sleep 500  ;
-    Send "Y"
-    Sleep 500  ;
-}
-
-MoveToTaskZone() {
-    Sleep 500 
-    Send "j" 
-    Sleep 500 
-    ; 移动到任务执行区域
-    Click 1762, 1198 
-    Sleep 500
-    Send "Y"
-    Sleep 500
-}
-
-
-HoldRightKey() {
-    ControlSend "{Right Down}", , BNSNEOWinTitle
-}
-
-
-Press4F() {
-    ControlSend "{4}", , BNSNEOWinTitle
-    Sleep 100
-    ControlSend "{f}", , BNSNEOWinTitle
-}
-
-PressF() {
-    ControlSend "{f}", , BNSNEOWinTitle
-    Sleep 300
-}
 
