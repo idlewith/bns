@@ -3,6 +3,8 @@
 #Include %A_ScriptDir%\lib\bns_blade_available.ahk
 #Include %A_ScriptDir%\lib\bns_common_available.ahk
 
+#MaxThreadsPerHotkey 2
+
 CoordMode "ToolTip", "Screen"
 
 ; 剑士相关的技能
@@ -15,7 +17,7 @@ ToggleBladeDefaultOutputSkill() {
 
     if (ToggleTabRR)
     {
-        SetTimer TabRR, 475
+        SetTimer TabRR, 85
     }
     else
     {
