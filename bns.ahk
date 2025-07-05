@@ -6,6 +6,7 @@
 #Include %A_ScriptDir%\lib\upgrade.ahk
 #Include %A_ScriptDir%\lib\bns_clipboard.ahk
 #Include %A_ScriptDir%\lib\blade.ahk
+#Include %A_ScriptDir%\lib\qigong.ahk
 
 CoordMode "ToolTip", "Screen"
 
@@ -42,14 +43,19 @@ XButton1::
     
     if (isReleased)  ; 如果按键在 0.3 秒内释放（可能是单击）
     {
-        ToggleBladeDefaultOutputSkill()  ; 执行长按功能
-  
+        ; 剑士
+        ; ToggleBladeDefaultOutputSkill()
+        ; 气功
+        ToggleQiGongDefaultOutputSkill()
     }
     else  ; 如果超时（长按）
     {
         while GetKeyState("XButton1","p")
         {
-            TabRR()
+            ; 剑士
+            ; TabRR()
+            ; 气功
+            QiGong2RTF()
         } 
     }
 
