@@ -1,2 +1,2 @@
 ﻿career=剑士
-altc_thing=挂机BOSS并捡物品
+altc_thing=剑士挂机BOSS并捡物品
