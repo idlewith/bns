@@ -38,7 +38,7 @@ F1::
 
 XButton1::
 {
-    ; KeyWait 返回 1（超时，仍在按住）或 0（已释放）
+    ; KeyWait 返回 0（超时，仍在按住）或 1（已释放）
     isReleased := KeyWait("XButton1", "T0.3")
     
     if (isReleased)  ; 如果按键在 0.3 秒内释放（可能是单击）
