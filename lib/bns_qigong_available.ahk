@@ -9,7 +9,7 @@ class QigongAvailability
 
     ; 气功火C技能是否能施展
     IsHuoCAvailable() {
-        return ColorDistance(PixelGetColor(1766, 1303), "0x472914") < 50
+        return ColorDistance(PixelGetColor(1766, 1303), "0x472914") < 20
     }
 
     IsBingCAvailable() {
