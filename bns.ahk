@@ -24,7 +24,7 @@ FileEncoding "UTF-8"
 
 ; 全局变量
 ; 配置文件
-; 如果配置文件有大的修改：initializeConfigFile、下面gui、下面的case选择器都要修改配置
+; 如果配置文件有大的修改：initializeConfigFile、下面gui、下面的case选择器、gui DropDownList设置默认值都要修改配置
 global configFile := "bns_config.txt"
 
 ; 初始化配置文件（如果不存在）
@@ -47,6 +47,22 @@ altcDDL := myGui.Add("DropDownList", "ys vAltcChoice w180", ["主线移动位置
 
 ; 保存并执行按钮
 myGui.Add("Button", "xs Section w300", "保存配置").OnEvent("Click", saveConfig)
+
+; gui DropDownList设置默认值
+if FileExist(configFile) 
+{
+    config := ParseConfigFile(configFile)
+    career := config.Get("career", "")
+    altc_thing := config.Get("altc_thing", "")
+    careerDDL.Text := career
+    altcDDL.Text := altc_thing
+}
+else
+{
+    careerDDL.Text := "剑士"
+    altcDDL.Text := "剑士挂机BOSS并捡物品"
+}
+
 
 ; 定义保存并执行函数
 saveConfig(*) {
