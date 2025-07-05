@@ -85,8 +85,8 @@ XButton2::
 
 !c::
 {
-    MoveToTaskZone()
-    ; ToggleKillBossAndPickThing()
+    ; MoveToTaskZone()
+    ToggleKillBossAndPickThing()
     ; ToggleCard()
 }
 

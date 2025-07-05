@@ -20,6 +20,7 @@ ToggleKillBossAndPickThing() {
     {
         SetTimer HoldRightKey, 0
         SetTimer Press4F, 0
+        ControlSend "{Right Up}", , BNSNEOWinTitle
     }
 }
 
