@@ -1,5 +1,27 @@
 #Requires AutoHotkey v2.0
 
+; 设置文件编码为 UTF-8（带BOM头）
+FileEncoding "UTF-8"
+
+; 初始化配置文件函数
+initializeConfigFile(configFile) {
+    
+    if !FileExist(configFile) {
+        try {
+            ; 创建默认配置
+            defaultConfig := "career=剑士`naltc_thing=挂机BOSS并捡物品"
+            ; 使用FileOpen确保UTF-8编码
+            file := FileOpen(configFile, "w", "UTF-8")
+            file.Write(defaultConfig)
+            file.Close()
+
+        } catch as e {
+            MsgBox "创建配置文件失败: " e.Message, "错误", "Icon!"
+        }
+    }
+}
+
+
 ; 解析配置文件函数，返回Map对象
 ParseConfigFile(filePath) {
     if !FileExist(filePath) {

@@ -16,12 +16,64 @@ CoordMode "ToolTip", "Screen"
 ; - 定时任务：小助手签到
 ; - 定时任务：每个月领B币券
 
+; 设置文件编码为 UTF-8（带BOM头）
+FileEncoding "UTF-8"
+
 ; ctrl v 在剑灵游戏里面粘贴字符串
 #HotIf WinActive(BNSNEOWinTitle)
 
 ; 全局变量
 ; 配置文件
+; 如果配置文件有大的修改：initializeConfigFile、下面gui、下面的case选择器都要修改配置
 global configFile := "bns_config.txt"
+
+; 初始化配置文件（如果不存在）
+initializeConfigFile(configFile)
+
+
+; 创建主窗口
+myGui := Gui()
+myGui.Title := "闲逛的剑灵宏配置选择器"
+myGui.OnEvent("Close", (*) => ExitApp())  ; 使用匿名函数替代 GuiClose
+myGui.SetFont("s10", "Arial")
+
+; 职业选择（第一行）
+myGui.Add("Text", "Section", "选择职业：")
+careerDDL := myGui.Add("DropDownList", "ys vCareerChoice w120", ["剑士", "气功"])
+
+; 功能选择（第二行）
+myGui.Add("Text", "xs Section", "选择附加功能：")
+altcDDL := myGui.Add("DropDownList", "ys vAltcChoice w180", ["主线移动位置", "挂机BOSS并捡物品", "挂机转转盘", "创建账号"])
+
+; 保存并执行按钮
+myGui.Add("Button", "xs Section w300", "保存配置").OnEvent("Click", saveConfig)
+
+; 定义保存并执行函数
+saveConfig(*) {
+    ; 获取选择的职业
+    career := myGui.Submit(false).CareerChoice
+    
+    ; 获取选择的功能
+    altc := myGui.Submit(false).AltcChoice
+    
+    ; 保存配置
+    try {
+        configText := "career=" career "`naltc_thing=" altc
+        ; 使用FileOpen确保UTF-8编码
+        file := FileOpen(configFile, "w", "UTF-8")
+        file.Write(configText)
+        file.Close()
+
+        MsgBox "配置已保存！", "成功", "T2"
+    } catch {
+        MsgBox "保存配置失败！", "错误", "Icon!"
+        return
+    }
+}
+
+; 显示窗口
+myGui.Show()
+
 
 
 ; F1::
@@ -56,9 +108,9 @@ XButton1::
         
         ; 根据职业执行不同的技能
         switch career {
-            case "qigong":
+            case "气功":
                 ToggleQiGongDefaultOutputSkill()
-            case "jianshi":
+            case "剑士":
                 ToggleBladeDefaultOutputSkill()
             default:
                 MsgBox "未知职业: " career
@@ -72,9 +124,9 @@ XButton1::
 
             ; 根据职业执行不同的技能
             switch career {
-                case "qigong":
+                case "气功":
                     QiGong2RTF()
-                case "jianshi":
+                case "剑士":
                     TabRR()
                 default:
                     MsgBox "未知职业: " career
@@ -107,13 +159,13 @@ XButton2::
     
     ; 根据职业执行不同的技能
     switch altc_thing {
-        case "taskzone":
+        case "主线移动位置":
             MoveToTaskZone()
-        case "bosspick":
+        case "挂机BOSS并捡物品":
             ToggleKillBossAndPickThing()
-        case "card":
+        case "挂机转转盘":
             ToggleCard()
-        case "createaccount":
+        case "创建账号":
             ToggleCreateAccount()
         default:
             MsgBox "未知挂机事情"
