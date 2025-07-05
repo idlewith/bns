@@ -1,6 +1,7 @@
 #Requires AutoHotkey v2.0
 #Include %A_ScriptDir%\lib\constant.ahk
 #Include %A_ScriptDir%\lib\bns_blade_available.ahk
+#Include %A_ScriptDir%\lib\bns_common_available.ahk
 
 CoordMode "ToolTip", "Screen"
 
@@ -32,18 +33,19 @@ TabRR() {
     Sleep 125
 
     blade_availability := BladeAvailability()
+    common_availability := CommonAvailability()
     
-    if (blade_availability.IsManaLess5() && blade_availability.Is2Available()) {
+    if (common_availability.IsManaLess5() && blade_availability.Is2Available()) {
         ControlSend "{2}", , BNSNEOWinTitle
         sleep 5
     }
 
-    if (blade_availability.IsManaLess5() && blade_availability.IsZAvailable()) {
+    if (common_availability.IsManaLess5() && blade_availability.IsZAvailable()) {
         ControlSend "{Z}", , BNSNEOWinTitle
         sleep 5
     }
 
-    if (blade_availability.IsSoulStoneAvailable()) {
+    if (common_availability.IsSoulStoneAvailable()) {
         ControlSend "``", , BNSNEOWinTitle
         sleep 5
     }
