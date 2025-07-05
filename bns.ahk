@@ -5,6 +5,7 @@
 #Include %A_ScriptDir%\lib\hang_up.ahk
 #Include %A_ScriptDir%\lib\upgrade.ahk
 #Include %A_ScriptDir%\lib\bns_clipboard.ahk
+#Include %A_ScriptDir%\lib\blade.ahk
 
 CoordMode "ToolTip", "Screen"
 
@@ -22,6 +23,30 @@ CoordMode "ToolTip", "Screen"
 {
     SendTextFromClipboard()
 }
+
+
+XButton1::
+{
+    ; KeyWait 返回 1（超时，仍在按住）或 0（已释放）
+    isReleased := KeyWait("XButton1", "T0.3")
+    
+    if (isReleased)  ; 如果按键在 0.3 秒内释放（可能是单击）
+    {
+        ToggleBladeDefaultOutputSkill()  ; 执行长按功能
+  
+    }
+    else  ; 如果超时（长按）
+    {
+        while GetKeyState("XButton1","p")
+        {
+            TabRR()
+            ToolTip "Press"
+            SetTimer () => ToolTip(), -100
+        } 
+    }
+
+}
+
 
 #HotIf
 
