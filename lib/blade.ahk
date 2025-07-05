@@ -1,5 +1,8 @@
 #Requires AutoHotkey v2.0
 #Include %A_ScriptDir%\lib\constant.ahk
+#Include %A_ScriptDir%\lib\bns_blade_available.ahk
+
+CoordMode "ToolTip", "Screen"
 
 ; 剑士相关的技能
 
@@ -11,7 +14,7 @@ ToggleBladeDefaultOutputSkill() {
 
     if (ToggleTabRR)
     {
-        SetTimer TabRR, 50
+        SetTimer TabRR, 475
     }
     else
     {
@@ -28,6 +31,21 @@ TabRR() {
     ControlSend "{R}", , BNSNEOWinTitle
     Sleep 125
 
-    ToolTip "Toggle"
-    SetTimer () => ToolTip(), -100
+    blade_availability := BladeAvailability()
+    
+    if (blade_availability.IsManaLess5() && blade_availability.Is2Available()) {
+        ControlSend "{2}", , BNSNEOWinTitle
+        sleep 5
+    }
+
+    if (blade_availability.IsManaLess5() && blade_availability.IsZAvailable()) {
+        ControlSend "{Z}", , BNSNEOWinTitle
+        sleep 5
+    }
+
+    if (blade_availability.IsSoulStoneAvailable()) {
+        ControlSend "``", , BNSNEOWinTitle
+        sleep 5
+    }
 }
+

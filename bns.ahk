@@ -19,6 +19,16 @@ CoordMode "ToolTip", "Screen"
 ; ctrl v 在剑灵游戏里面粘贴字符串
 #HotIf WinActive(BNSNEOWinTitle)
 
+F1::
+{
+    MouseGetPos &mouseX, &mouseY
+    color := PixelGetColor(mouseX, mouseY)
+    coordinateColor := "ColorDistance(PixelGetColor(" MouseX ", " MouseY "), `"" color "`") < 50"
+    ToolTip coordinateColor
+    A_Clipboard := coordinateColor
+    SetTimer ToolTip, -5000
+}
+
 ^v::
 {
     SendTextFromClipboard()
@@ -40,8 +50,6 @@ XButton1::
         while GetKeyState("XButton1","p")
         {
             TabRR()
-            ToolTip "Press"
-            SetTimer () => ToolTip(), -100
         } 
     }
 
