@@ -1,7 +1,5 @@
 #Requires AutoHotkey v2.0
 #Include %A_ScriptDir%\lib\constant.ahk
-#Include %A_ScriptDir%\lib\bns_qigong_available.ahk
-#Include %A_ScriptDir%\lib\bns_common_available.ahk
 
 CoordMode "ToolTip", "Screen"
 
@@ -10,6 +8,7 @@ CoordMode "ToolTip", "Screen"
 ; todo
 ; - 火C触发的时候，不要触发冰C
 ; - 1要9秒触发一次，触发不了？
+; - 气功的按键按的过程中，会触发输入键？
 
 
 
@@ -31,24 +30,18 @@ ToggleQiGongDefaultOutputSkill() {
 
 
 QiGong2RTF() {
-    qigong_availability := QigongAvailability()
-    common_availability := CommonAvailability()
 
+    Sleep 100
     ControlSend "{2}", , BNSNEOWinTitle
-    Sleep 10
+    Sleep 100
     ControlSend "{F}", , BNSNEOWinTitle
-    Sleep 10
+    Sleep 100
     ControlSend "{F}", , BNSNEOWinTitle
-    Sleep 10
+    Sleep 100
     ControlSend "{R}", , BNSNEOWinTitle
     Sleep 250
     ControlSend "{T}", , BNSNEOWinTitle
-    Sleep 10
-
-    if (common_availability.IsSoulStoneAvailable()) {
-        ControlSend "``", , BNSNEOWinTitle
-        sleep 5
-    }
+    Sleep 100
 
 }
 

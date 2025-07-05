@@ -44,21 +44,32 @@ XButton1::
     if (isReleased)  ; 如果按键在 0.3 秒内释放（可能是单击）
     {
         ; 剑士
-        ; ToggleBladeDefaultOutputSkill()
+        ToggleBladeDefaultOutputSkill()
         ; 气功
-        ToggleQiGongDefaultOutputSkill()
+        ; ToggleQiGongDefaultOutputSkill()
     }
     else  ; 如果超时（长按）
     {
         while GetKeyState("XButton1","p")
         {
             ; 剑士
-            ; TabRR()
+            TabRR()
             ; 气功
-            QiGong2RTF()
+            ; QiGong2RTF()
         } 
     }
 
+}
+
+XButton2::
+{
+    while GetKeyState("XButton2","p")
+    {
+        ControlSend "s", , BNSNEOWinTitle
+        Sleep 150
+        ControlSend "s", , BNSNEOWinTitle
+        Sleep 125
+    } 
 }
 
 
