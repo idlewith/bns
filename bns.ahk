@@ -7,6 +7,7 @@
 #Include %A_ScriptDir%\lib\bns_clipboard.ahk
 #Include %A_ScriptDir%\lib\blade.ahk
 #Include %A_ScriptDir%\lib\qigong.ahk
+#Include %A_ScriptDir%\lib\bns_file.ahk
 
 CoordMode "ToolTip", "Screen"
 
@@ -15,20 +16,23 @@ CoordMode "ToolTip", "Screen"
 ; - 定时任务：小助手签到
 ; - 定时任务：每个月领B币券
 
-
-
 ; ctrl v 在剑灵游戏里面粘贴字符串
 #HotIf WinActive(BNSNEOWinTitle)
 
-F1::
-{
-    MouseGetPos &mouseX, &mouseY
-    color := PixelGetColor(mouseX, mouseY)
-    coordinateColor := "ColorDistance(PixelGetColor(" MouseX ", " MouseY "), `"" color "`") < 50"
-    ToolTip coordinateColor
-    A_Clipboard := coordinateColor
-    SetTimer ToolTip, -5000
-}
+; 全局变量
+; 配置文件
+global configFile := "bns_config.txt"
+
+
+; F1::
+; {
+;     MouseGetPos &mouseX, &mouseY
+;     color := PixelGetColor(mouseX, mouseY)
+;     coordinateColor := "ColorDistance(PixelGetColor(" MouseX ", " MouseY "), `"" color "`") < 50"
+;     ToolTip coordinateColor
+;     A_Clipboard := coordinateColor
+;     SetTimer ToolTip, -5000
+; }
 
 ^v::
 {
@@ -38,24 +42,43 @@ F1::
 
 XButton1::
 {
+
+    ; 从字典中获取职业
+    ; 读取并解析配置文件
+    config := ParseConfigFile(configFile)
+    career := config.Get("career", "")
+
     ; KeyWait 返回 0（超时，仍在按住）或 1（已释放）
     isReleased := KeyWait("XButton1", "T0.3")
     
     if (isReleased)  ; 如果按键在 0.3 秒内释放（可能是单击）
-    {
-        ; 剑士
-        ToggleBladeDefaultOutputSkill()
-        ; 气功
-        ; ToggleQiGongDefaultOutputSkill()
+    {      
+        
+        ; 根据职业执行不同的技能
+        switch career {
+            case "qigong":
+                ToggleQiGongDefaultOutputSkill()
+            case "jianshi":
+                ToggleBladeDefaultOutputSkill()
+            default:
+                MsgBox "未知职业: " career
+        }
+
     }
     else  ; 如果超时（长按）
     {
         while GetKeyState("XButton1","p")
         {
-            ; 剑士
-            TabRR()
-            ; 气功
-            ; QiGong2RTF()
+
+            ; 根据职业执行不同的技能
+            switch career {
+                case "qigong":
+                    QiGong2RTF()
+                case "jianshi":
+                    TabRR()
+                default:
+                    MsgBox "未知职业: " career
+            }
         } 
     }
 
@@ -66,9 +89,7 @@ XButton2::
     while GetKeyState("XButton2","p")
     {
         ControlSend "s", , BNSNEOWinTitle
-        Sleep 150
         ControlSend "s", , BNSNEOWinTitle
-        Sleep 125
     } 
 }
 
@@ -76,18 +97,28 @@ XButton2::
 #HotIf
 
 
-
-^+a::
-{
-    ToggleCreateAccount()
-}
-
-
 !c::
 {
-    ; MoveToTaskZone()
-    ToggleKillBossAndPickThing()
-    ; ToggleCard()
+
+    ; 从字典中获取挂机要做的事情
+    ; 读取并解析配置文件
+    config := ParseConfigFile(configFile)
+    altc_thing := config.Get("altc_thing", "")
+    
+    ; 根据职业执行不同的技能
+    switch altc_thing {
+        case "taskzone":
+            MoveToTaskZone()
+        case "bosspick":
+            ToggleKillBossAndPickThing()
+        case "card":
+            ToggleCard()
+        case "createaccount":
+            ToggleCreateAccount()
+        default:
+            MsgBox "未知挂机事情"
+    }
+
 }
 
 

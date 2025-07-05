@@ -1,0 +1,16 @@
+; 确定职业
+; 可以是 qigong 或 jianshi
+career=qigong  
+
+; 确定 alt c 要做的事情
+; taskzone: MoveToTaskZone() 跑主线
+; bosspick: ToggleKillBossAndPickThing() 剑士旋转挂机击杀boss并自动拾取物品
+; card: ToggleCard() 挂机转转盘
+; createaccount: ToggleCreateAccount() 创建账号
+altc_thing=bosspick
+
+
+; 其他配置项可以在这里添加
+; 例如:
+; skill_delay=500
+; combo_key=alt+f1
