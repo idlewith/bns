@@ -43,7 +43,7 @@ careerDDL := myGui.Add("DropDownList", "ys vCareerChoice w120", ["剑士", "气�
 
 ; 功能选择（第二行）
 myGui.Add("Text", "xs Section", "选择附加功能：")
-altcDDL := myGui.Add("DropDownList", "ys vAltcChoice w180", ["主线移动位置", "挂机BOSS并捡物品", "挂机转转盘", "创建账号", "领取B币券"])
+altcDDL := myGui.Add("DropDownList", "ys vAltcChoice w180", ["主线移动位置", "剑士挂机BOSS并捡物品", "气功挂机BOSS并捡物品", "挂机转转盘", "创建账号", "领取B币券"])
 
 ; 保存并执行按钮
 myGui.Add("Button", "xs Section w300", "保存配置").OnEvent("Click", saveConfig)
@@ -156,13 +156,16 @@ XButton2::
     ; 读取并解析配置文件
     config := ParseConfigFile(configFile)
     altc_thing := config.Get("altc_thing", "")
+    career := config.Get("career", "")
     
     ; 根据职业执行不同的技能
     switch altc_thing {
         case "主线移动位置":
             MoveToTaskZone()
-        case "挂机BOSS并捡物品":
-            ToggleKillBossAndPickThing()
+        case "剑士挂机BOSS并捡物品":
+            ToggleBladeKillBossAndPickThing()
+        case "气功挂机BOSS并捡物品":
+            ToggleQiGongKillBossAndPickThing()
         case "挂机转转盘":
             ToggleCard()
         case "创建账号":

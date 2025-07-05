@@ -9,7 +9,7 @@ initializeConfigFile(configFile) {
     if !FileExist(configFile) {
         try {
             ; 创建默认配置
-            defaultConfig := "career=剑士`naltc_thing=挂机BOSS并捡物品"
+            defaultConfig := "career=剑士`naltc_thing=剑士挂机BOSS并捡物品"
             ; 使用FileOpen确保UTF-8编码
             file := FileOpen(configFile, "w", "UTF-8")
             file.Write(defaultConfig)

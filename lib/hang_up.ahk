@@ -1,14 +1,37 @@
 #Requires AutoHotkey v2.0
 #Include %A_ScriptDir%\lib\constant.ahk
+#Include %A_ScriptDir%\lib\qigong.ahk
 
 ; 挂机相关的操作
-
+; 剑士挂机打BOSS并捡东西 
 global ToggleRight4F := 0
+; 气功挂机打BOSS并捡东西 
+global ToggleRight2RTF := 0
+; 挂机转转盘
 global ToggleF := 0
 
 
+
 ; 挂机打怪并捡东西
-ToggleKillBossAndPickThing() {
+ToggleQiGongKillBossAndPickThing() {
+    global ToggleRight2RTF := !ToggleRight2RTF
+
+    if (ToggleRight2RTF)
+    {
+        SetTimer HoldRightKey, 50
+        SetTimer QiGong2RTF, 100
+    }
+    else
+    {
+        SetTimer HoldRightKey, 0
+        SetTimer QiGong2RTF, 0
+        ControlSend "{Right Up}", , BNSNEOWinTitle
+    }
+}
+
+
+; 挂机打怪并捡东西
+ToggleBladeKillBossAndPickThing() {
     global ToggleRight4F := !ToggleRight4F
 
     if (ToggleRight4F)
