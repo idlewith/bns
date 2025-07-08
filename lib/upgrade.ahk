@@ -1,4 +1,5 @@
 #Requires AutoHotkey v2.0
+#Include %A_ScriptDir%\lib\constant.ahk
 
 global ToggleLeftYClick := 0
 
@@ -17,9 +18,10 @@ ToggleCreateAccount() {
 
 LeftYCreateAccount() {
     Sleep 500  
-    Click 2426, 1367 ; 创号
+    ; Click 2426, 1367 ; 创号
+    ControlClick "x2421 y1371", BNSNEOWinTitle
     Sleep 500  ;
-    Send "Y"
+    ControlSend "{y}", , BNSNEOWinTitle
     Sleep 500  ;
 }
 

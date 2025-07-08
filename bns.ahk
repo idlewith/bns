@@ -9,7 +9,10 @@
 #Include %A_ScriptDir%\lib\qigong.ahk
 #Include %A_ScriptDir%\lib\bns_file.ahk
 
+#MaxThreads 15
+
 CoordMode "ToolTip", "Screen"
+
 
 ; 功能列表
 ; - ctrl v 在剑灵游戏里面粘贴字符串
@@ -19,8 +22,8 @@ CoordMode "ToolTip", "Screen"
 ; 设置文件编码为 UTF-8（带BOM头）
 FileEncoding "UTF-8"
 
-; ctrl v 在剑灵游戏里面粘贴字符串
-#HotIf WinActive(BNSNEOWinTitle)
+; 全局变量，用来关闭按键循环
+global ToggleStart := false
 
 ; 全局变量
 ; 配置文件
@@ -90,18 +93,20 @@ saveConfig(*) {
 myGui.Show()
 
 
+; ctrl v 在剑灵游戏里面粘贴字符串
+#HotIf WinActive(BNSNEOWinTitle)
 
-; F1::
-; {
-;     MouseGetPos &mouseX, &mouseY
-;     color := PixelGetColor(mouseX, mouseY)
-;     coordinateColor := "ColorDistance(PixelGetColor(" MouseX ", " MouseY "), `"" color "`") < 50"
-;     ToolTip coordinateColor
-;     A_Clipboard := coordinateColor
-;     SetTimer ToolTip, -5000
-; }
+F1::
+{
+    MouseGetPos &mouseX, &mouseY
+    color := PixelGetColor(mouseX, mouseY)
+    coordinateColor := "ColorDistance(PixelGetColor(" MouseX ", " MouseY "), `"" color "`") < 50"
+    ToolTip coordinateColor
+    A_Clipboard := coordinateColor
+    SetTimer ToolTip, -5000
+}
 
-^v::
+^+v::
 {
     SendTextFromClipboard()
 }
@@ -120,7 +125,9 @@ XButton1::
     
     if (isReleased)  ; 如果按键在 0.3 秒内释放（可能是单击）
     {      
-        
+        ; 按下启动按键
+        global ToggleStart := !ToggleStart
+
         ; 根据职业执行不同的技能
         switch career {
             case "气功":
@@ -134,9 +141,11 @@ XButton1::
     }
     else  ; 如果超时（长按）
     {
+
+        global ToggleStart := true
+
         while GetKeyState("XButton1","p")
         {
-
             ; 根据职业执行不同的技能
             switch career {
                 case "气功":
@@ -146,7 +155,10 @@ XButton1::
                 default:
                     MsgBox "未知职业: " career
             }
-        } 
+        }
+
+        ToggleStart := false
+
     }
 
 }

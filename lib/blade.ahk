@@ -2,22 +2,16 @@
 #Include %A_ScriptDir%\lib\constant.ahk
 #Include %A_ScriptDir%\lib\bns_blade_available.ahk
 #Include %A_ScriptDir%\lib\bns_common_available.ahk
-
-#MaxThreadsPerHotkey 2
-
-CoordMode "ToolTip", "Screen"
+#Include %A_ScriptDir%\lib\bns_keyboard.ahk
 
 ; 剑士相关的技能
 
-global ToggleTabRR := 0
-
 
 ToggleBladeDefaultOutputSkill() {
-    global ToggleTabRR := !ToggleTabRR
 
-    if (ToggleTabRR)
+    if (ToggleStart)
     {
-        SetTimer TabRR, 85
+        SetTimer TabRR, 30
     }
     else
     {
@@ -27,29 +21,35 @@ ToggleBladeDefaultOutputSkill() {
 
 
 TabRR() {
-    ControlSend "{Tab}", , BNSNEOWinTitle
-    Sleep 190
-    ControlSend "{R}", , BNSNEOWinTitle
-    Sleep 150
-    ControlSend "{R}", , BNSNEOWinTitle
-    Sleep 125
+    
+    PressKeyWithAbort("r", 200)
+    Sleep 78
+
+    PressKeyWithAbort("Tab", 100)
+    Sleep 50
+
+    ; 大后期 穿击
+    ; PressKeyWithAbort("t", 100)
+    ; Sleep 50
+
+
 
     blade_availability := BladeAvailability()
     common_availability := CommonAvailability()
     
     if (common_availability.IsManaLess5() && blade_availability.Is2Available()) {
-        ControlSend "{2}", , BNSNEOWinTitle
-        sleep 5
+        PressKeyWithAbort("2", 1)
+        Sleep 5
     }
 
     if (common_availability.IsManaLess5() && blade_availability.IsZAvailable()) {
-        ControlSend "{Z}", , BNSNEOWinTitle
-        sleep 5
+        PressKeyWithAbort("z", 1)
+        Sleep 5
     }
 
     if (common_availability.IsSoulStoneAvailable()) {
-        ControlSend "``", , BNSNEOWinTitle
-        sleep 5
+        PressKeyWithAbort("``", 1)
+        Sleep 5
     }
 }
 
