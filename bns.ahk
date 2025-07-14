@@ -107,19 +107,21 @@ saveConfig(*) {
 myGui.Show()
 
 
-F1::
-{
-    MouseGetPos &mouseX, &mouseY
-    color := PixelGetColor(mouseX, mouseY)
-    coordinateColor := "ColorDistance(PixelGetColor(" MouseX ", " MouseY "), `"" color "`") < 50"
-    ToolTip coordinateColor
-    A_Clipboard := coordinateColor
-    SetTimer ToolTip, -5000
-}
+
 
 
 ; ctrl v 在剑灵游戏里面粘贴字符串
 #HotIf WinActive(BNSNEOWinTitle)
+
+; F1::
+; {
+;     MouseGetPos &mouseX, &mouseY
+;     color := PixelGetColor(mouseX, mouseY)
+;     coordinateColor := "ColorDistance(PixelGetColor(" MouseX ", " MouseY "), `"" color "`") < 50"
+;     ToolTip coordinateColor
+;     A_Clipboard := coordinateColor
+;     SetTimer ToolTip, -5000
+; }
 
 
 
@@ -129,85 +131,93 @@ F1::
 }
 
 
-; XButton1::
-; {
+~XButton1::
+{
 
-;     ; 从字典中获取职业
-;     ; 读取并解析配置文件
-;     config := ParseConfigFile(configFile)
-;     career := config.Get("career", "")
+    ; 从字典中获取职业
+    ; 读取并解析配置文件
+    config := ParseConfigFile(configFile)
+    career := config.Get("career", "")
 
-;     global ToggleStart := true
+    global ToggleStart := true
 
-;     while GetKeyState("XButton1","p")
-;     {
-;         ; TabRRPress()
+    ; while GetKeyState("XButton1","p")
+    ; {
+        ; TabRRPress()
 
-;         ; 根据职业执行不同的技能
-;         switch career {
-;             case "气功":
-;                 QiGong2RTFPress()
-;             case "剑士":
-;                 TabRRPress()
-;             default:
-;                 MsgBox "未知职业: " career
-;         }
-;     }
+        ; 根据职业执行不同的技能
+        switch career {
+            case "气功":
+                QiGong2RTFPress()
+            case "剑士":
+                ; TabRRPress()
+                SetTimer TabRRPress, 50
+            default:
+                MsgBox "未知职业: " career
+        }
+    ; }
 
-;     global ToggleStart := false
+    global ToggleStart := false
 
 
-;     ; ; KeyWait 返回 0（超时，仍在按住）或 1（已释放）
-;     ; isReleased := KeyWait("XButton1", "T0.2")
+    ; ; KeyWait 返回 0（超时，仍在按住）或 1（已释放）
+    ; isReleased := KeyWait("XButton1", "T0.2")
     
-;     ; if (isReleased)  ; 如果按键在 0.3 秒内释放（可能是单击）
-;     ; {      
-;     ;     ; 按下启动按键
-;     ;     global ToggleStart := !ToggleStart
+    ; if (isReleased)  ; 如果按键在 0.3 秒内释放（可能是单击）
+    ; {      
+    ;     ; 按下启动按键
+    ;     global ToggleStart := !ToggleStart
 
-;     ;     ; 根据职业执行不同的技能
-;     ;     switch career {
-;     ;         case "气功":
-;     ;             ToggleQiGongDefaultOutputSkill()
-;     ;         case "剑士":
-;     ;             ToggleBladeDefaultOutputSkill()
-;     ;         default:
-;     ;             MsgBox "未知职业: " career
-;     ;     }
+    ;     ; 根据职业执行不同的技能
+    ;     switch career {
+    ;         case "气功":
+    ;             ToggleQiGongDefaultOutputSkill()
+    ;         case "剑士":
+    ;             ToggleBladeDefaultOutputSkill()
+    ;         default:
+    ;             MsgBox "未知职业: " career
+    ;     }
 
-;     ; }
-;     ; else  ; 如果超时（长按）
-;     ; {
+    ; }
+    ; else  ; 如果超时（长按）
+    ; {
 
-;     ;     global ToggleStart := true
+    ;     global ToggleStart := true
 
-;     ;     while GetKeyState("XButton1","p")
-;     ;     {
-;     ;         ; 根据职业执行不同的技能
-;     ;         switch career {
-;     ;             case "气功":
-;     ;                 QiGong2RTFPress()
-;     ;             case "剑士":
-;     ;                 TabRRPress()
-;     ;             default:
-;     ;                 MsgBox "未知职业: " career
-;     ;         }
-;     ;     }
+    ;     while GetKeyState("XButton1","p")
+    ;     {
+    ;         ; 根据职业执行不同的技能
+    ;         switch career {
+    ;             case "气功":
+    ;                 QiGong2RTFPress()
+    ;             case "剑士":
+    ;                 TabRRPress()
+    ;             default:
+    ;                 MsgBox "未知职业: " career
+    ;         }
+    ;     }
 
-;     ;     ToggleStart := false
+    ;     ToggleStart := false
 
-;     ; }
+    ; }
 
-; }
+}
 
-; XButton2::
-; {
-;     while GetKeyState("XButton2","p")
-;     {
-;         ControlSend "s", , BNSNEOWinTitle
-;         ControlSend "s", , BNSNEOWinTitle
-;     } 
-; }
+
+~XButton1 Up::
+{
+    SetTimer TabRRPress, 0
+}
+
+
+XButton2::
+{
+    while GetKeyState("XButton2","p")
+    {
+        ControlSend "s", , BNSNEOWinTitle
+        ControlSend "s", , BNSNEOWinTitle
+    } 
+}
 
 
 #HotIf

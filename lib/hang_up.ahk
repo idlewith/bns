@@ -20,12 +20,14 @@ ToggleQiGongKillBossAndPickThing() {
     {
         SetTimer HoldRightKey, 50
         SetTimer QiGong2RTF, 100
+        ToolTip "正在按住2RTF...", 1332, 644
     }
     else
     {
         SetTimer HoldRightKey, 0
         SetTimer QiGong2RTF, 0
         ControlSend "{Right Up}", , BNSNEOWinTitle
+        SetTimer ToolTip, -500
     }
 }
 
@@ -38,12 +40,14 @@ ToggleBladeKillBossAndPickThing() {
     {
         SetTimer HoldRightKey, 50
         SetTimer Press4F, 100
+        ToolTip "正在按住4F...", 1332, 644
     }
     else
     {
         SetTimer HoldRightKey, 0
         SetTimer Press4F, 0
         ControlSend "{Right Up}", , BNSNEOWinTitle
+        SetTimer ToolTip, -500
     }
 }
 
@@ -53,11 +57,13 @@ ToggleCard() {
 
     if (ToggleF)
     {
-        SetTimer PressF, 500
+        SetTimer PressF, 90
+        ToolTip "正在按住F...", 1332, 644
     }
     else
     {
         SetTimer PressF, 0
+        SetTimer ToolTip, -500
     }
 }
 

@@ -13,6 +13,11 @@ class CommonAvailability
         return ColorDistance(PixelGetColor(1338, 1125), "0x1E272D") < 50
     }
 
+    ; 是否是3格内力以下，不包括3格内力
+    IsManaLess3() {
+        return ColorDistance(PixelGetColor(1180, 1123), "0x3D3F34") < 50
+    }
+
     ; 灵魂石是否可以施展
     IsSoulStoneAvailable() {
         return ColorDistance(PixelGetColor(848, 1224), "0xE7E4AE") < 50
