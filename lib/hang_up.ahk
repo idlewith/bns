@@ -75,7 +75,7 @@ Press4F() {
 
 PressF() {
     ControlSend "{f}", , BNSNEOWinTitle
-    Sleep 200
+    Sleep 80
 }
 
 

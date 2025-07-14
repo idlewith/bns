@@ -21,7 +21,7 @@ ToggleBladeDefaultOutputSkill() {
 
 
 TabRR() {
-    
+
     PressKeyWithAbort("r", 200)
     Sleep 78
 
@@ -37,19 +37,82 @@ TabRR() {
     blade_availability := BladeAvailability()
     common_availability := CommonAvailability()
     
-    if (common_availability.IsManaLess5() && blade_availability.Is2Available()) {
-        PressKeyWithAbort("2", 1)
-        Sleep 5
-    }
+    ; if (common_availability.IsManaLess5() && blade_availability.Is2Available()) {
+    ;     PressKeyWithAbort("2", 1)
+    ;     Sleep 5
+    ; }
 
     if (common_availability.IsManaLess5() && blade_availability.IsZAvailable()) {
         PressKeyWithAbort("z", 1)
         Sleep 5
     }
-
-    if (common_availability.IsSoulStoneAvailable()) {
-        PressKeyWithAbort("``", 1)
-        Sleep 5
-    }
+    
+    ; if (common_availability.IsSoulStoneAvailable()) {
+    ;     PressKeyWithAbort("``", 1)
+    ;     Sleep 5
+    ; }
 }
+
+TabRRPress() {
+
+    if !GetKeyState("XButton1", "P") || !WinExist(BNSNEOWinTitle)
+        return
+
+    keysDown := []
+
+    ; 获取可用性状态（只计算一次）
+    blade_availability := BladeAvailability()
+    common_availability := CommonAvailability()
+
+    actions := [
+        { key: "r",  hold: true, sleepHold: 200, sleepAfter: 78 },
+        { key: "Tab", hold: true, sleepHold: 100, sleepAfter: 50 },
+        { key: "z",  hold: false, sleepAfter: 5, condition: () => ( common_availability.IsManaLess5() && blade_availability.IsZAvailable() )},
+        ; { key: "2",  hold: false, sleepAfter: 5, condition: () => ( common_availability.IsManaLess5() && blade_availability.Is2Available() )},
+        ; { key: "``", hold: false, sleepAfter: 5, condition: () => common_availability.IsSoulStoneAvailable() },
+    ]
+
+    try {
+        for action in actions {
+            if !GetKeyState("XButton1", "P")
+                return
+
+            if action.HasProp("condition") && !action.condition.Call()
+                continue
+
+            if action.hold {
+                if !GetKeyState("XButton1", "P")
+                    return
+
+                ControlSend("{" action.key " down}", , BNSNEOWinTitle)
+                keysDown.Push(action.key)
+                Sleep(action.sleepHold)
+                ControlSend("{" action.key " up}", , BNSNEOWinTitle)
+                Sleep(action.sleepAfter)
+
+                if !GetKeyState("XButton1", "P")
+                    return
+
+            } else {
+                ControlSend(action.key, , BNSNEOWinTitle)
+                Sleep(action.sleepAfter)
+
+                if !GetKeyState("XButton1", "P")
+                    return
+            }
+        }
+    }
+    catch as e {
+
+    }
+    finally {
+        ; 防止卡键
+        for key in keysDown
+            ControlSend("{" key " up}", , BNSNEOWinTitle)
+    }
+
+
+
+}
+
 

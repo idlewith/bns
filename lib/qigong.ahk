@@ -46,14 +46,19 @@ QiGong2RTF() {
 
     if (qigong_availability.IsHuoCAvailable()) {
         PressKeyWithAbort("r", 5)
+        Sleep 300
         PressKeyWithAbort("r", 5)
+        Sleep 300
         PressKeyWithAbort("r", 5)
+        Sleep 300
 
         PressKeyWithAbort("c", 5)
         Sleep 300
 
         PressKeyWithAbort("r", 35)
+        Sleep 300
         PressKeyWithAbort("r", 35)
+        Sleep 300
         PressKeyWithAbort("r", 35)
         Sleep 300
         
@@ -68,5 +73,95 @@ QiGong2RTF() {
 ; 气功1技能，9秒一次，用来叠灼烧
 QiGong1() {
     PressKeyWithAbort("1", 5)
+}
+
+
+
+
+QiGong2RTFPress() {
+
+    if !GetKeyState("XButton1", "P")
+        return
+
+    Sleep 5
+    PressKeyWithAbort("2", 5)
+
+    if !GetKeyState("XButton1", "P")
+        return
+    PressKeyWithAbort("f", 35)
+
+    if !GetKeyState("XButton1", "P")
+        return
+    PressKeyWithAbort("f", 35)
+
+    if !GetKeyState("XButton1", "P")
+        return
+    PressKeyWithAbort("r", 5)
+
+    common_availability := CommonAvailability()
+    qigong_availability := QigongAvailability()
+
+    if !GetKeyState("XButton1", "P")
+        return
+    if (common_availability.IsManaLess5() && qigong_availability.Is3Available()) {
+        PressKeyWithAbort("3", 5)
+        sleep 5
+    }
+
+    if !GetKeyState("XButton1", "P")
+        return
+    PressKeyWithAbort("r", 5)
+
+    if !GetKeyState("XButton1", "P")
+        return
+    PressKeyWithAbort("r", 5)
+
+    if !GetKeyState("XButton1", "P")
+        return
+    PressKeyWithAbort("r", 5)
+
+    if (qigong_availability.IsHuoCAvailable()) {
+        if !GetKeyState("XButton1", "P")
+            return
+        PressKeyWithAbort("r", 5)
+        Sleep 300
+
+        if !GetKeyState("XButton1", "P")
+            return
+        PressKeyWithAbort("r", 5)
+        Sleep 300
+
+        if !GetKeyState("XButton1", "P")
+            return
+        PressKeyWithAbort("r", 5)
+        Sleep 300
+
+        if !GetKeyState("XButton1", "P")
+            return
+        PressKeyWithAbort("c", 5)
+        Sleep 300
+
+        if !GetKeyState("XButton1", "P")
+            return
+        PressKeyWithAbort("r", 35)
+        Sleep 300
+
+        if !GetKeyState("XButton1", "P")
+            return
+        PressKeyWithAbort("r", 35)
+        Sleep 300
+
+        if !GetKeyState("XButton1", "P")
+            return
+        PressKeyWithAbort("r", 35)
+        Sleep 300
+        
+    }
+
+    if !GetKeyState("XButton1", "P")
+        return
+    ControlSend "t", , BNSNEOWinTitle
+    Sleep 5
+
 }
 

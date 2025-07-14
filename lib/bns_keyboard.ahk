@@ -22,3 +22,12 @@ PressKeyWithAbort(key, hold := 5) {
     ; 松开
     ControlSend "{" key " up}", , BNSNEOWinTitle
 }
+
+
+; 释放按键
+RealseKey(key) {
+
+    ; 补发松开，防止卡键
+    ControlSend "{" key " up}", , BNSNEOWinTitle
+    
+}

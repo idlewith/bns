@@ -10,8 +10,11 @@
 #Include %A_ScriptDir%\lib\bns_file.ahk
 
 #MaxThreads 15
+#SingleInstance Force
 
 CoordMode "ToolTip", "Screen"
+CoordMode "Pixel", "Screen"
+CoordMode "Mouse", "Screen"
 
 
 ; 功能列表
@@ -42,12 +45,23 @@ myGui.SetFont("s10", "Arial")
 
 ; 职业选择（第一行）
 myGui.Add("Text", "Section", "选择职业：")
-careerDDL := myGui.Add("DropDownList", "ys vCareerChoice w120", ["剑士", "气功"])
+careerDDL := myGui.Add("DropDownList", "ys vCareerChoice w120", [CareerBladeMaster, CareerForceMaster])
 careerDDL.OnEvent("Change", saveConfig)
 
 ; 功能选择（第二行）
 myGui.Add("Text", "xs Section", "选择附加功能：")
-altcDDL := myGui.Add("DropDownList", "ys vAltcChoice w180", ["主线移动位置", "剑士挂机BOSS并捡物品", "气功挂机BOSS并捡物品", "挂机转转盘", "创建账号", "领取B币券"])
+altcDDL := myGui.Add(
+    "DropDownList", "ys vAltcChoice w180", 
+    [
+        AdditionalMovePositionInUpgrade,
+        AdditionalBladeMasterKillBossAndPickThing,
+        AdditionalForceMasterKillBossAndPickThing,
+        AdditionalPressF,
+        AdditionalCreateAccount,
+        AdditionalGetBilibiliCoin,
+        AdditionalBNSZSCheck,
+    ]
+)
 altcDDL.OnEvent("Change", saveConfig)
 
 ; gui DropDownList设置默认值
@@ -61,8 +75,8 @@ if FileExist(configFile)
 }
 else
 {
-    careerDDL.Text := "剑士"
-    altcDDL.Text := "剑士挂机BOSS并捡物品"
+    careerDDL.Text := CareerBladeMaster
+    altcDDL.Text := AdditionalBladeMasterKillBossAndPickThing
 }
 
 
@@ -93,9 +107,6 @@ saveConfig(*) {
 myGui.Show()
 
 
-; ctrl v 在剑灵游戏里面粘贴字符串
-#HotIf WinActive(BNSNEOWinTitle)
-
 F1::
 {
     MouseGetPos &mouseX, &mouseY
@@ -106,71 +117,97 @@ F1::
     SetTimer ToolTip, -5000
 }
 
+
+; ctrl v 在剑灵游戏里面粘贴字符串
+#HotIf WinActive(BNSNEOWinTitle)
+
+
+
 ^+v::
 {
     SendTextFromClipboard()
 }
 
 
-XButton1::
-{
+; XButton1::
+; {
 
-    ; 从字典中获取职业
-    ; 读取并解析配置文件
-    config := ParseConfigFile(configFile)
-    career := config.Get("career", "")
+;     ; 从字典中获取职业
+;     ; 读取并解析配置文件
+;     config := ParseConfigFile(configFile)
+;     career := config.Get("career", "")
 
-    ; KeyWait 返回 0（超时，仍在按住）或 1（已释放）
-    isReleased := KeyWait("XButton1", "T0.3")
+;     global ToggleStart := true
+
+;     while GetKeyState("XButton1","p")
+;     {
+;         ; TabRRPress()
+
+;         ; 根据职业执行不同的技能
+;         switch career {
+;             case "气功":
+;                 QiGong2RTFPress()
+;             case "剑士":
+;                 TabRRPress()
+;             default:
+;                 MsgBox "未知职业: " career
+;         }
+;     }
+
+;     global ToggleStart := false
+
+
+;     ; ; KeyWait 返回 0（超时，仍在按住）或 1（已释放）
+;     ; isReleased := KeyWait("XButton1", "T0.2")
     
-    if (isReleased)  ; 如果按键在 0.3 秒内释放（可能是单击）
-    {      
-        ; 按下启动按键
-        global ToggleStart := !ToggleStart
+;     ; if (isReleased)  ; 如果按键在 0.3 秒内释放（可能是单击）
+;     ; {      
+;     ;     ; 按下启动按键
+;     ;     global ToggleStart := !ToggleStart
 
-        ; 根据职业执行不同的技能
-        switch career {
-            case "气功":
-                ToggleQiGongDefaultOutputSkill()
-            case "剑士":
-                ToggleBladeDefaultOutputSkill()
-            default:
-                MsgBox "未知职业: " career
-        }
+;     ;     ; 根据职业执行不同的技能
+;     ;     switch career {
+;     ;         case "气功":
+;     ;             ToggleQiGongDefaultOutputSkill()
+;     ;         case "剑士":
+;     ;             ToggleBladeDefaultOutputSkill()
+;     ;         default:
+;     ;             MsgBox "未知职业: " career
+;     ;     }
 
-    }
-    else  ; 如果超时（长按）
-    {
+;     ; }
+;     ; else  ; 如果超时（长按）
+;     ; {
 
-        global ToggleStart := true
+;     ;     global ToggleStart := true
 
-        while GetKeyState("XButton1","p")
-        {
-            ; 根据职业执行不同的技能
-            switch career {
-                case "气功":
-                    QiGong2RTF()
-                case "剑士":
-                    TabRR()
-                default:
-                    MsgBox "未知职业: " career
-            }
-        }
+;     ;     while GetKeyState("XButton1","p")
+;     ;     {
+;     ;         ; 根据职业执行不同的技能
+;     ;         switch career {
+;     ;             case "气功":
+;     ;                 QiGong2RTFPress()
+;     ;             case "剑士":
+;     ;                 TabRRPress()
+;     ;             default:
+;     ;                 MsgBox "未知职业: " career
+;     ;         }
+;     ;     }
 
-        ToggleStart := false
+;     ;     ToggleStart := false
 
-    }
+;     ; }
 
-}
+; }
 
-XButton2::
-{
-    while GetKeyState("XButton2","p")
-    {
-        ControlSend "s", , BNSNEOWinTitle
-        ControlSend "s", , BNSNEOWinTitle
-    } 
-}
+; XButton2::
+; {
+;     while GetKeyState("XButton2","p")
+;     {
+;         ControlSend "s", , BNSNEOWinTitle
+;         ControlSend "s", , BNSNEOWinTitle
+;     } 
+; }
 
 
 #HotIf
@@ -187,18 +224,20 @@ XButton2::
     
     ; 根据职业执行不同的技能
     switch altc_thing {
-        case "主线移动位置":
+        case AdditionalMovePositionInUpgrade:
             MoveToTaskZone()
-        case "剑士挂机BOSS并捡物品":
+        case AdditionalBladeMasterKillBossAndPickThing:
             ToggleBladeKillBossAndPickThing()
-        case "气功挂机BOSS并捡物品":
+        case AdditionalForceMasterKillBossAndPickThing:
             ToggleQiGongKillBossAndPickThing()
-        case "挂机转转盘":
+        case AdditionalPressF:
             ToggleCard()
-        case "创建账号":
+        case AdditionalCreateAccount:
             ToggleCreateAccount()
-        case "领取B币券":
+        case AdditionalGetBilibiliCoin:
             BiliBiliMonthlyCoin()
+        case AdditionalBNSZSCheck:
+            BNSClientDailyAttendance()
         default:
             MsgBox "未知挂机事情"
     }
