@@ -36,8 +36,12 @@ BNSClientDailyAttendance() {
     WinActivate BNSZSTitle
     Sleep 1000
 
-    ClickImage("C:\code\bns\image\touxiang.png", "left", "找到默认头像")
-    Sleep 1000
+    DeafultAvatarResult := ClickImage("C:\code\bns\image\touxiang.png", "默认头像")  
+    Sleep 500
+    if DeafultAvatarResult.IsClick {
+        MouseClick "left", DeafultAvatarResult.X + 5, DeafultAvatarResult.Y + 5
+    }
+    Sleep 2000
 
     ; 下面是循环所有窗口找到目标窗口
     ; ; 弹出来登录QQ的框
@@ -61,21 +65,106 @@ BNSClientDailyAttendance() {
     ; WinActivate("ahk_id " qqLoginHwnd)
     ; Sleep 3000
 
-    ClickImage("*50 C:\code\bns\image\1.png", "left", "找到1号QQ")
-    Sleep 4000
+
+    Found1QQResult := ClickImage("*100 C:\code\bns\image\1.png", "登录界面的1号QQ")
+    Sleep 500
+    if Found1QQResult.IsClick {
+        MouseClick "left", Found1QQResult.X + 5, Found1QQResult.Y + 5
+    }
+    Sleep 3000
+
 
     ; 后面都是在主窗口
-    ClickImage("C:\code\bns\image\1-2.png", "right", "登录后找到1号QQ头像")
-    Sleep 1000
+    Found1QQLoginedResult := ClickImage("*100 C:\code\bns\image\1-2.png", "登录后的1号QQ头像")
+    Sleep 500  
+    if Found1QQLoginedResult.IsClick {
+        MouseClick "right", Found1QQLoginedResult.X + 5, Found1QQLoginedResult.Y + 5
+    }
+    Sleep 500
 
-    ClickImage("C:\code\bns\image\mark.png", "left", "找到签到选项")
-    Sleep 1000
+
+    FoundMarkResult := ClickImage("C:\code\bns\image\mark.png", "签到选项")
+    Sleep 500
+    if FoundMarkResult.IsClick {
+        MouseClick "left", FoundMarkResult.X + 5, FoundMarkResult.Y + 5
+    }
+    Sleep 500
+
+
+    MarkOKResult := ClickImage("C:\code\bns\image\mark_ok.png", "签到OK按钮")
+    Sleep 500
+    if MarkOKResult.IsClick {
+        MouseClick "left", MarkOKResult.X + 5, MarkOKResult.Y + 5
+    }
+    Sleep 500
+
+    FoundTitleResult := ClickImage("C:\code\bns\image\title.png", "标签栏")
+    Sleep 500
+    if FoundTitleResult.IsClick {
+        MouseClick "left", FoundTitleResult.X + 5, FoundTitleResult.Y + 5
+    }
+    Sleep 500
+
+
+    ; 后面都是在主窗口
+    Found1QQLoginedResult := ClickImage("*50 C:\code\bns\image\1-2.png", "登录后的1号QQ头像")
+    Sleep 500  
+    if Found1QQLoginedResult.IsClick {
+        MouseClick "left", Found1QQLoginedResult.X + 5, Found1QQLoginedResult.Y + 5
+        Sleep 500
+
+        QuitResult := ClickImage("*50 C:\code\bns\image\quit.png", "")
+        Sleep 500
+        if QuitResult.IsClick {
+            MouseClick "left", QuitResult.X + 5, QuitResult.Y + 5
+        }
+        Sleep 2000
+
+        Found1QQResult := ClickImage("*100 C:\code\bns\image\1.png", "登录界面的1号QQ")
+        Sleep 500
+        if Found1QQResult.IsClick {
+            MouseClick "left", Found1QQResult.X + 5, Found1QQResult.Y + 5
+        }
+        Sleep 3000
+
+        Found1QQLoginedResult := ClickImage("C:\code\bns\image\1-2.png", "登录后的1号QQ头像")
+        Sleep 500  
+        if Found1QQLoginedResult.IsClick {
+            MouseClick "right", Found1QQLoginedResult.X + 5, Found1QQLoginedResult.Y + 5
+        }
+        Sleep 500
+
+
+        FoundMarkResult := ClickImage("C:\code\bns\image\mark.png", "签到选项")
+        Sleep 500
+        if FoundMarkResult.IsClick {
+            MouseClick "left", FoundMarkResult.X + 5, FoundMarkResult.Y + 5
+        }
+        Sleep 500
+
+
+        MarkOKResult := ClickImage("C:\code\bns\image\mark_ok.png", "签到OK按钮")
+        Sleep 500
+        if MarkOKResult.IsClick {
+            MouseClick "left", MarkOKResult.X + 5, MarkOKResult.Y + 5
+        }
+        Sleep 500
+
+        FoundTitleResult := ClickImage("C:\code\bns\image\title.png", "标签栏")
+        Sleep 500
+        if FoundTitleResult.IsClick {
+            MouseClick "left", FoundTitleResult.X + 5, FoundTitleResult.Y + 5
+        }
+        Sleep 500
+
+    }
+    Sleep 500
 
 }
 
 
 
-ClickImage(imagePath, LeftOrRight, PromptFound) {
+ClickImage(imagePath, PromptFound) {
 
     FoundLeftX := 0
     FoundLeftY := 0
@@ -100,9 +189,11 @@ ClickImage(imagePath, LeftOrRight, PromptFound) {
                 ToolTip PromptFound, ToolTipX, ToolTipY
                 SetTimer ToolTip, -ToolTipDelay
 
+                break
+
             }
             else {
-                ToolTip "not found", ToolTipX, ToolTipY
+                ToolTip "没找到！！！ -- " PromptFound, ToolTipX, ToolTipY
                 SetTimer ToolTip, -ToolTipDelay
             }
             
@@ -116,10 +207,8 @@ ClickImage(imagePath, LeftOrRight, PromptFound) {
         SetTimer ToolTip, -ToolTipDelay
     }
 
-    Sleep 2000
-    if IsClick {
-        MouseClick LeftOrRight, FoundX + 5, FoundY + 5
-    }       
+
+    return { IsClick: IsClick, X: FoundX, Y: FoundY }   
 
 }
 

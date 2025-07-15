@@ -2,7 +2,7 @@
 
 ; 剑灵进程名
 BNSNEOWinTitle := "ahk_exe BNSR.exe"
-BNSZSTitle := "ahk_exe 剑灵小助手3.1.5.exe"
+BNSZSTitle := "ahk_exe 剑灵小助手.exe"
 
 
 ; 职业

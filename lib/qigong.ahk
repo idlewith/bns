@@ -80,88 +80,62 @@ QiGong1() {
 
 QiGong2RTFPress() {
 
-    if !GetKeyState("XButton1", "P")
+    if !GetKeyState("XButton1", "P") || !WinExist(BNSNEOWinTitle)
         return
 
-    Sleep 5
-    PressKeyWithAbort("2", 5)
+    keysDown := []
 
-    if !GetKeyState("XButton1", "P")
-        return
-    PressKeyWithAbort("f", 35)
-
-    if !GetKeyState("XButton1", "P")
-        return
-    PressKeyWithAbort("f", 35)
-
-    if !GetKeyState("XButton1", "P")
-        return
-    PressKeyWithAbort("r", 5)
-
-    common_availability := CommonAvailability()
+    ; 获取可用性状态（只计算一次）
     qigong_availability := QigongAvailability()
+    common_availability := CommonAvailability()
 
-    if !GetKeyState("XButton1", "P")
-        return
-    if (common_availability.IsManaLess5() && qigong_availability.Is3Available()) {
-        PressKeyWithAbort("3", 5)
-        sleep 5
-    }
-
-    if !GetKeyState("XButton1", "P")
-        return
-    PressKeyWithAbort("r", 5)
-
-    if !GetKeyState("XButton1", "P")
-        return
-    PressKeyWithAbort("r", 5)
-
-    if !GetKeyState("XButton1", "P")
-        return
-    PressKeyWithAbort("r", 5)
-
-    if (qigong_availability.IsHuoCAvailable()) {
-        if !GetKeyState("XButton1", "P")
-            return
-        PressKeyWithAbort("r", 5)
-        Sleep 300
-
-        if !GetKeyState("XButton1", "P")
-            return
-        PressKeyWithAbort("r", 5)
-        Sleep 300
-
-        if !GetKeyState("XButton1", "P")
-            return
-        PressKeyWithAbort("r", 5)
-        Sleep 300
-
-        if !GetKeyState("XButton1", "P")
-            return
-        PressKeyWithAbort("c", 5)
-        Sleep 300
-
-        if !GetKeyState("XButton1", "P")
-            return
-        PressKeyWithAbort("r", 35)
-        Sleep 300
-
-        if !GetKeyState("XButton1", "P")
-            return
-        PressKeyWithAbort("r", 35)
-        Sleep 300
-
-        if !GetKeyState("XButton1", "P")
-            return
-        PressKeyWithAbort("r", 35)
-        Sleep 300
+    actions := [
         
+        { key: "r", hold: false, sleepAfter: 120 },
+        { key: "t", hold: false, sleepAfter: 120 },
+        { key: "f",  hold: false, sleepAfter: 120 },
+        { key: "2",  hold: false, sleepAfter: 120 },
+        { key: "3",  hold: false, sleepAfter: 15, condition: () => ( common_availability.IsManaLess5() && qigong_availability.Is3Available() )},
+    ]
+
+
+
+    SetTimer QiGong2RTFPress, 0
+
+
+    for action in actions {
+        if !GetKeyState("XButton1", "P")
+            return
+
+        if action.HasProp("condition") && !action.condition.Call()
+            continue
+
+        if action.hold {
+            if !GetKeyState("XButton1", "P")
+                return
+
+            ControlSend("{" action.key " down}", , BNSNEOWinTitle)
+            keysDown.Push(action.key)
+            Sleep(action.sleepHold)
+            ControlSend("{" action.key " up}", , BNSNEOWinTitle)
+            Sleep(action.sleepAfter)
+
+            if !GetKeyState("XButton1", "P")
+                return
+
+        } else {
+            ; ControlSend("{" action.key "}", , BNSNEOWinTitle)
+            SendInput("{" action.key "}")
+            Sleep(action.sleepAfter)
+
+            if !GetKeyState("XButton1", "P")
+                return
+        }
     }
 
-    if !GetKeyState("XButton1", "P")
-        return
-    ControlSend "t", , BNSNEOWinTitle
-    Sleep 5
+
+    SetTimer QiGong2RTFPress, 50
+
 
 }
 

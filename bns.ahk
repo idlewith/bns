@@ -148,7 +148,7 @@ myGui.Show()
         ; 根据职业执行不同的技能
         switch career {
             case "气功":
-                QiGong2RTFPress()
+                SetTimer QiGong2RTFPress, 50
             case "剑士":
                 ; TabRRPress()
                 SetTimer TabRRPress, 50
@@ -207,6 +207,7 @@ myGui.Show()
 ~XButton1 Up::
 {
     SetTimer TabRRPress, 0
+    SetTimer QiGong2RTFPress, 0
 }
 
 
@@ -262,10 +263,14 @@ CheckTime() {
     currentTimeHourMinute := FormatTime(A_Now, "HHmm") ; 获取当前时间，格式为 HHmm（24 小时制）
     currentTimeYearMonthDayHourMinute := FormatTime(A_Now, "yyMMddHHmm") ; 获取当前时间，格式为 yyMMddHHmm (24 小时制）
     
-    ; 如果当前时间是 00:57，剑灵小助手打卡
-    ; if (currentTimeHourMinute = "0031") {
-    ;     BNSDailyAttendance()
-    ; }
+    ; 如果当前时间是 2335 0005 ，剑灵小助手打卡
+    if (currentTimeHourMinute = "2355") {
+        BNSClientDailyAttendance()
+    }
+
+    if (currentTimeHourMinute = "0005") {
+        BNSClientDailyAttendance()
+    }
 
     ; 如果当前时间是 202504220057，领取B币券
     if (currentTimeYearMonthDayHourMinute = "2507242301") {
