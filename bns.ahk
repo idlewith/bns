@@ -60,6 +60,8 @@ altcDDL := myGui.Add(
         AdditionalCreateAccount,
         AdditionalGetBilibiliCoin,
         AdditionalBNSZSCheck,
+        AdditionalMouseLeftClick,
+        AdditionalCheckPrice,
     ]
 )
 altcDDL.OnEvent("Change", saveConfig)
@@ -249,6 +251,10 @@ XButton2::
             BiliBiliMonthlyCoin()
         case AdditionalBNSZSCheck:
             BNSClientDailyAttendance()
+        case AdditionalMouseLeftClick:
+            ToggleHoldMouseLeft()
+        case AdditionalCheckPrice:
+            ToggleCheckPrice()
         default:
             MsgBox "未知挂机事情"
     }

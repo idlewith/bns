@@ -72,11 +72,17 @@ TabRRPress() {
 
         { key: "Tab", hold: false, sleepAfter: 150 },
 
+        { key: "t",  hold: false, sleepAfter: 150, condition: () => ( !common_availability.IsManaLess5() && blade_availability.IsTabCriticalHit() )},
+
         { key: "z",  hold: false, sleepAfter: 15, condition: () => ( common_availability.IsManaLess5() && blade_availability.IsZAvailable() )},
+
+        { key: "3",  hold: false, sleepAfter: 15, condition: () => ( common_availability.IsManaLess5() && blade_availability.Is3Avaliable() )},
+
         ; { key: "v",  hold: false, sleepAfter: 15, condition: () => ( common_availability.IsManaLess3() && blade_availability.IsOutVAvaliable() )},
         ; { key: "v",  hold: false, sleepAfter: 15, condition: () => ( blade_availability.IsInVAvaliable() )},
 
-        ; { key: "2",  hold: false, sleepAfter: 5, condition: () => ( common_availability.IsManaLess5() && blade_availability.Is2Available() )},
+        { key: "2",  hold: false, sleepAfter: 5, condition: () => ( common_availability.IsManaLess5() && blade_availability.Is2Available() )},
+
         { key: "``", hold: false, sleepAfter: 5, condition: () => common_availability.IsSoulStoneAvailable() },
     ]
 

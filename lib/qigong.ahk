@@ -91,6 +91,7 @@ QiGong2RTFPress() {
 
     actions := [
         
+        { key: "c", hold: false, sleepAfter: 800 , condition: () => ( qigong_availability.IsHuoCAvailable() )},
         { key: "r", hold: false, sleepAfter: 120 },
         { key: "t", hold: false, sleepAfter: 120 },
         { key: "f",  hold: false, sleepAfter: 120 },
@@ -124,6 +125,13 @@ QiGong2RTFPress() {
                 return
 
         } else {
+
+            if (action.key = 'c') {
+                SendInput("{" action.key "}")
+                Sleep(action.sleepAfter)
+                break
+            }
+
             ; ControlSend("{" action.key "}", , BNSNEOWinTitle)
             SendInput("{" action.key "}")
             Sleep(action.sleepAfter)

@@ -36,5 +36,15 @@ class BladeAvailability
         return ColorDistance(PixelGetColor(1368, 1316), "0x948C71") < 50
     }
 
+    ; 剑士Tab是否暴击
+    IsTabCriticalHit() {
+        return ColorDistance(PixelGetColor(126, 974), "0xE18500") < 50
+    }
+
+    ; 剑士3的山崩是否能施展
+    Is3Avaliable() {
+        return ColorDistance(PixelGetColor(1313, 1222), "0x604B30") < 50
+    }
+
 }
 

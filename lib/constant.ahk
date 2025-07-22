@@ -17,5 +17,6 @@ AdditionalPressF := "挂机转转盘"
 AdditionalCreateAccount := "创建账号"
 AdditionalGetBilibiliCoin := "领取B币券"
 AdditionalBNSZSCheck := "剑灵小助手客户端签到"
-
+AdditionalMouseLeftClick := "点击左键"
+AdditionalCheckPrice := "检查价格"
 
