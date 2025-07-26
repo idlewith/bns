@@ -1,5 +1,6 @@
 #Requires AutoHotkey v2.0
 #Include %A_ScriptDir%\lib\bns_color.ahk
+#Include %A_ScriptDir%\lib\findtext.ahk
 
 ; 剑士取色，判断技能是否可是施展
 
@@ -38,7 +39,13 @@ class BladeAvailability
 
     ; 剑士Tab是否暴击
     IsTabCriticalHit() {
-        return ColorDistance(PixelGetColor(126, 974), "0xE18500") < 50
+        return ColorDistance(PixelGetColor(123, 1268), "0xEF8E02") < 50
+    }
+
+    ; 剑士Tab是否暴击V2
+    IsTabCriticalHitV2() {
+        TabText := "|<>FE9700-0.83$19.400203n0Tbz83z40E20N10AUzoETy88PzYAzW61130UVUEkkTMPw8B2461630W1UH0o"
+        return ok:=FindText(&X, &Y, 98, 1247, 139, 1292, 0, 0, TabText)
     }
 
     ; 剑士3的山崩是否能施展

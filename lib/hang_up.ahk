@@ -113,7 +113,8 @@ ToggleCard() {
     {
         SetTimer PressF, 65
         SetTimer PressF, 125
-        ToolTip "正在按住F...", 1332, 644
+        SetTimer PressF, 185
+        ; ToolTip "正在按住F...", 1332, 644
     }
     else
     {

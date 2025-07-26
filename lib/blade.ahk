@@ -68,18 +68,44 @@ TabRRPress() {
         ; { key: "r",  hold: true, sleepHold: 100, sleepAfter: 78 },
         ; { key: "Tab", hold: true, sleepHold: 100, sleepAfter: 30 },
 
+
+        ; todo test
+        ; { key: "r",  hold: false, sleepAfter: 10 },
+        ; { key: "r",  hold: false, sleepAfter: 10 },
+        ; { key: "r",  hold: false, sleepAfter: 10 },
+        ; { key: "r",  hold: false, sleepAfter: 10 },
+        ; { key: "r",  hold: false, sleepAfter: 10 },
+        ; { key: "r",  hold: false, sleepAfter: 10 },
+        ; { key: "r",  hold: false, sleepAfter: 10 },
+        ; { key: "r",  hold: false, sleepAfter: 10 },
+        ; { key: "r",  hold: false, sleepAfter: 125 },
+
+        ; { key: "Tab",  hold: false, sleepAfter: 10 },
+        ; { key: "Tab",  hold: false, sleepAfter: 10 },
+        ; { key: "Tab",  hold: false, sleepAfter: 10 },
+        ; { key: "Tab",  hold: false, sleepAfter: 10 },
+        ; { key: "Tab",  hold: false, sleepAfter: 90 },
+
+
+        ; { key: "t",  hold: false, sleepAfter: 5, condition: () => ( !common_availability.IsManaLess5() && blade_availability.IsTabCriticalHit() )},
+        ; { key: "t",  hold: false, sleepAfter: 5, condition: () => ( !common_availability.IsManaLess5() && blade_availability.IsTabCriticalHit() )},
+        ; { key: "t",  hold: false, sleepAfter: 75, condition: () => ( !common_availability.IsManaLess5() && blade_availability.IsTabCriticalHit() )},
+
+        ; 275
         { key: "r",  hold: false, sleepAfter: 275 },
+        ; 150
+        { key: "Tab", hold: false, sleepAfter: 130 },
 
-        { key: "Tab", hold: false, sleepAfter: 150 },
-
-        { key: "t",  hold: false, sleepAfter: 150, condition: () => ( !common_availability.IsManaLess5() && blade_availability.IsTabCriticalHit() )},
+        ; 150
+        ; { key: "t",  hold: false, sleepAfter: 90, condition: () => ( !common_availability.IsManaLess5() && blade_availability.IsTabCriticalHitV2() )},
+        { key: "t",  hold: false, sleepAfter: 90, condition: () => ( blade_availability.IsTabCriticalHitV2() )},
 
         { key: "z",  hold: false, sleepAfter: 15, condition: () => ( common_availability.IsManaLess5() && blade_availability.IsZAvailable() )},
 
         { key: "3",  hold: false, sleepAfter: 15, condition: () => ( common_availability.IsManaLess5() && blade_availability.Is3Avaliable() )},
 
-        ; { key: "v",  hold: false, sleepAfter: 15, condition: () => ( common_availability.IsManaLess3() && blade_availability.IsOutVAvaliable() )},
-        ; { key: "v",  hold: false, sleepAfter: 15, condition: () => ( blade_availability.IsInVAvaliable() )},
+        { key: "v",  hold: false, sleepAfter: 120, condition: () => ( common_availability.IsManaLess3() && blade_availability.IsOutVAvaliable() )},
+        { key: "v",  hold: false, sleepAfter: 15, condition: () => ( blade_availability.IsInVAvaliable() )},
 
         { key: "2",  hold: false, sleepAfter: 5, condition: () => ( common_availability.IsManaLess5() && blade_availability.Is2Available() )},
 
@@ -90,48 +116,39 @@ TabRRPress() {
 
     SetTimer TabRRPress, 0
 
-    ; try {
-        for action in actions {
+    for action in actions {
+        if !GetKeyState("XButton1", "P")
+            break
+
+        if action.HasProp("condition") && !action.condition.Call()
+            continue
+
+        if action.hold {
             if !GetKeyState("XButton1", "P")
-                return
+                break
 
-            if action.HasProp("condition") && !action.condition.Call()
-                continue
+            ControlSend("{" action.key " down}", , BNSNEOWinTitle)
+            keysDown.Push(action.key)
+            Sleep(action.sleepHold)
+            ControlSend("{" action.key " up}", , BNSNEOWinTitle)
+            Sleep(action.sleepAfter)
 
-            if action.hold {
-                if !GetKeyState("XButton1", "P")
-                    return
+            if !GetKeyState("XButton1", "P")
+                break
 
-                ControlSend("{" action.key " down}", , BNSNEOWinTitle)
-                keysDown.Push(action.key)
-                Sleep(action.sleepHold)
-                ControlSend("{" action.key " up}", , BNSNEOWinTitle)
-                Sleep(action.sleepAfter)
+        } else {
+            ; ControlSend("{" action.key "}", , BNSNEOWinTitle)
+            
+            SendInput("{" action.key "}")
 
-                if !GetKeyState("XButton1", "P")
-                    return
+            if !GetKeyState("XButton1", "P")
+                break
 
-            } else {
-                ; ControlSend("{" action.key "}", , BNSNEOWinTitle)
-                SendInput("{" action.key "}")
-                Sleep(action.sleepAfter)
-
-                if !GetKeyState("XButton1", "P")
-                    return
-            }
+            Sleep(action.sleepAfter)
         }
-    ; }
-    ; catch as e {
-
-    ; }
-    ; finally {
-    ;     ; 防止卡键
-    ;     for key in keysDown
-    ;         ControlSend("{" key " up}", , BNSNEOWinTitle)
-    ; }
+    }
 
     SetTimer TabRRPress, 50
-
 
 
 }

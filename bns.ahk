@@ -8,6 +8,8 @@
 #Include %A_ScriptDir%\lib\blade.ahk
 #Include %A_ScriptDir%\lib\qigong.ahk
 #Include %A_ScriptDir%\lib\bns_file.ahk
+#Include %A_ScriptDir%\lib\bns_activity.ahk
+#Include %A_ScriptDir%\lib\bns_zhumoling.ahk
 
 #MaxThreads 15
 #SingleInstance Force
@@ -62,6 +64,7 @@ altcDDL := myGui.Add(
         AdditionalBNSZSCheck,
         AdditionalMouseLeftClick,
         AdditionalCheckPrice,
+        ActivityLeftMoudeEnter,
     ]
 )
 altcDDL.OnEvent("Change", saveConfig)
@@ -133,94 +136,64 @@ myGui.Show()
 }
 
 
-~XButton1::
-{
+; ~XButton1::
+; {
 
-    ; 从字典中获取职业
-    ; 读取并解析配置文件
-    config := ParseConfigFile(configFile)
-    career := config.Get("career", "")
+;     ; 从字典中获取职业
+;     ; 读取并解析配置文件
+;     config := ParseConfigFile(configFile)
+;     career := config.Get("career", "")
 
-    global ToggleStart := true
-
-    ; while GetKeyState("XButton1","p")
-    ; {
-        ; TabRRPress()
-
-        ; 根据职业执行不同的技能
-        switch career {
-            case "气功":
-                SetTimer QiGong2RTFPress, 50
-            case "剑士":
-                ; TabRRPress()
-                SetTimer TabRRPress, 50
-            default:
-                MsgBox "未知职业: " career
-        }
-    ; }
-
-    global ToggleStart := false
+;     ; 根据职业执行不同的技能
+;     switch career {
+;         case "气功":
+;             SetTimer QiGong2RTFPress, 50
+;         case "剑士":
+;             ; TabRRPress()
+;             SetTimer TabRRPress, 50
+;         default:
+;             MsgBox "未知职业: " career
+;     }
 
 
-    ; ; KeyWait 返回 0（超时，仍在按住）或 1（已释放）
-    ; isReleased := KeyWait("XButton1", "T0.2")
+;     ; ; KeyWait 返回 0（超时，仍在按住）或 1（已释放）
+;     ; isReleased := KeyWait("XButton1", "T0.2")
     
-    ; if (isReleased)  ; 如果按键在 0.3 秒内释放（可能是单击）
-    ; {      
-    ;     ; 按下启动按键
-    ;     global ToggleStart := !ToggleStart
+;     ; if (isReleased)  ; 如果按键在 0.3 秒内释放（可能是单击）
+;     ; {      
+;     ;     ; 按下启动按键
+;     ;     global ToggleStart := !ToggleStart
 
-    ;     ; 根据职业执行不同的技能
-    ;     switch career {
-    ;         case "气功":
-    ;             ToggleQiGongDefaultOutputSkill()
-    ;         case "剑士":
-    ;             ToggleBladeDefaultOutputSkill()
-    ;         default:
-    ;             MsgBox "未知职业: " career
-    ;     }
+;     ;     ; 根据职业执行不同的技能
+;     ;     switch career {
+;     ;         case "气功":
+;     ;             ToggleQiGongDefaultOutputSkill()
+;     ;         case "剑士":
+;     ;             ToggleBladeDefaultOutputSkill()
+;     ;         default:
+;     ;             MsgBox "未知职业: " career
+;     ;     }
 
-    ; }
-    ; else  ; 如果超时（长按）
-    ; {
+;     ; }
 
-    ;     global ToggleStart := true
-
-    ;     while GetKeyState("XButton1","p")
-    ;     {
-    ;         ; 根据职业执行不同的技能
-    ;         switch career {
-    ;             case "气功":
-    ;                 QiGong2RTFPress()
-    ;             case "剑士":
-    ;                 TabRRPress()
-    ;             default:
-    ;                 MsgBox "未知职业: " career
-    ;         }
-    ;     }
-
-    ;     ToggleStart := false
-
-    ; }
-
-}
+; }
 
 
-~XButton1 Up::
-{
-    SetTimer TabRRPress, 0
-    SetTimer QiGong2RTFPress, 0
-}
+; ~XButton1 Up::
+; {
+;     SetTimer TabRRPress, 0
+;     SetTimer QiGong2RTFPress, 0
+; }
 
 
-XButton2::
-{
-    while GetKeyState("XButton2","p")
-    {
-        ControlSend "s", , BNSNEOWinTitle
-        ControlSend "s", , BNSNEOWinTitle
-    } 
-}
+; XButton2::
+; {
+;     while GetKeyState("XButton2","p")
+;     {
+;         ControlSend "s", , BNSNEOWinTitle
+;         ControlSend "s", , BNSNEOWinTitle
+;     } 
+; }
 
 
 #HotIf
@@ -255,6 +228,8 @@ XButton2::
             ToggleHoldMouseLeft()
         case AdditionalCheckPrice:
             ToggleCheckPrice()
+        case ActivityLeftMoudeEnter:
+            ToggleActivityLeftMouseEnter()
         default:
             MsgBox "未知挂机事情"
     }
@@ -279,10 +254,12 @@ CheckTime() {
     }
 
     ; 如果当前时间是 202504220057，领取B币券
-    if (currentTimeYearMonthDayHourMinute = "2507242301") {
+    if (currentTimeYearMonthDayHourMinute = "2508242301") {
         BiliBiliMonthlyCoin()
         
     }
+
+    reportZhumoling()
 }
 
 ; 设置定时器，每分钟检查一次时间

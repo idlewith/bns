@@ -13,59 +13,67 @@
 ToggleQiGongDefaultOutputSkill() {
     if (ToggleStart)
     {
-        SetTimer QiGong2RTF, 95
-        SetTimer QiGong1, 9000 
+        SetTimer QiGong2RTF, 50
+        ; SetTimer QiGong1, 9000 
     }
     else
     {
         SetTimer QiGong2RTF, 0
-        SetTimer QiGong1, 0
+        ; SetTimer QiGong1, 0
     }
 }
 
 
 QiGong2RTF() {
 
-    Sleep 5
-    PressKeyWithAbort("2", 5)
-    PressKeyWithAbort("f", 35)
-    PressKeyWithAbort("f", 35)
-    PressKeyWithAbort("r", 5)
+    if !ToggleStart || !WinExist(BNSNEOWinTitle)
+        return
 
-    common_availability := CommonAvailability()
+    keysDown := []
+
+    ; 获取可用性状态（只计算一次）
     qigong_availability := QigongAvailability()
+    common_availability := CommonAvailability()
 
-    if (common_availability.IsManaLess5() && qigong_availability.Is3Available()) {
-        PressKeyWithAbort("3", 5)
-        sleep 5
-    }
-
-    PressKeyWithAbort("r", 5)
-    PressKeyWithAbort("r", 5)
-    PressKeyWithAbort("r", 5)
-
-    if (qigong_availability.IsHuoCAvailable()) {
-        PressKeyWithAbort("r", 5)
-        Sleep 300
-        PressKeyWithAbort("r", 5)
-        Sleep 300
-        PressKeyWithAbort("r", 5)
-        Sleep 300
-
-        PressKeyWithAbort("c", 5)
-        Sleep 300
-
-        PressKeyWithAbort("r", 35)
-        Sleep 300
-        PressKeyWithAbort("r", 35)
-        Sleep 300
-        PressKeyWithAbort("r", 35)
-        Sleep 300
+    actions := [
         
+        { key: "c", sleepAfter: 800 , condition: () => ( qigong_availability.IsHuoCAvailable() )},
+        { key: "r", sleepAfter: 120 },
+        { key: "t", sleepAfter: 120 },
+        { key: "f", sleepAfter: 120 },
+        { key: "2", sleepAfter: 120 },
+        { key: "3", sleepAfter: 15, condition: () => ( common_availability.IsManaLess5() && qigong_availability.Is3Available() )},
+    ]
+
+
+
+    SetTimer QiGong2RTF, 0
+
+
+    for action in actions {
+        if !ToggleStart
+            break
+
+        if action.HasProp("condition") && !action.condition.Call()
+            continue
+
+        if (action.key = 'c') {
+            SendInput("{" action.key "}")
+            Sleep(action.sleepAfter)
+            break
+        }
+
+        ; ControlSend("{" action.key "}", , BNSNEOWinTitle)
+        SendInput("{" action.key "}")
+        Sleep(action.sleepAfter)
+
+        if !ToggleStart
+            break
+
     }
 
-    ControlSend "t", , BNSNEOWinTitle
-    Sleep 5
+
+    SetTimer QiGong2RTF, 50
 
 }
 
@@ -91,12 +99,12 @@ QiGong2RTFPress() {
 
     actions := [
         
-        { key: "c", hold: false, sleepAfter: 800 , condition: () => ( qigong_availability.IsHuoCAvailable() )},
-        { key: "r", hold: false, sleepAfter: 120 },
-        { key: "t", hold: false, sleepAfter: 120 },
-        { key: "f",  hold: false, sleepAfter: 120 },
-        { key: "2",  hold: false, sleepAfter: 120 },
-        { key: "3",  hold: false, sleepAfter: 15, condition: () => ( common_availability.IsManaLess5() && qigong_availability.Is3Available() )},
+        { key: "c", sleepAfter: 800 , condition: () => ( qigong_availability.IsHuoCAvailable() )},
+        { key: "r", sleepAfter: 120 },
+        { key: "t", sleepAfter: 120 },
+        { key: "f", sleepAfter: 120 },
+        { key: "2", sleepAfter: 120 },
+        { key: "3", sleepAfter: 15, condition: () => ( common_availability.IsManaLess5() && qigong_availability.Is3Available() )},
     ]
 
 
@@ -106,39 +114,24 @@ QiGong2RTFPress() {
 
     for action in actions {
         if !GetKeyState("XButton1", "P")
-            return
+            break
 
         if action.HasProp("condition") && !action.condition.Call()
             continue
 
-        if action.hold {
-            if !GetKeyState("XButton1", "P")
-                return
-
-            ControlSend("{" action.key " down}", , BNSNEOWinTitle)
-            keysDown.Push(action.key)
-            Sleep(action.sleepHold)
-            ControlSend("{" action.key " up}", , BNSNEOWinTitle)
-            Sleep(action.sleepAfter)
-
-            if !GetKeyState("XButton1", "P")
-                return
-
-        } else {
-
-            if (action.key = 'c') {
-                SendInput("{" action.key "}")
-                Sleep(action.sleepAfter)
-                break
-            }
-
-            ; ControlSend("{" action.key "}", , BNSNEOWinTitle)
+        if (action.key = 'c') {
             SendInput("{" action.key "}")
             Sleep(action.sleepAfter)
-
-            if !GetKeyState("XButton1", "P")
-                return
+            break
         }
+
+        ; ControlSend("{" action.key "}", , BNSNEOWinTitle)
+        SendInput("{" action.key "}")
+        Sleep(action.sleepAfter)
+
+        if !GetKeyState("XButton1", "P")
+            break
+
     }
 
 
