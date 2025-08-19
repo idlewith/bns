@@ -98,13 +98,20 @@ QiGong2RTFPress() {
     common_availability := CommonAvailability()
 
     actions := [
-        
+
         { key: "c", sleepAfter: 800 , condition: () => ( qigong_availability.IsHuoCAvailable() )},
-        { key: "r", sleepAfter: 120 },
+
         { key: "t", sleepAfter: 120 },
-        { key: "f", sleepAfter: 120 },
+
+        { key: "z", sleepAfter: 800, condition: () => ( qigong_availability.IsBingZAvailable() )},
+        { key: "x", sleepAfter: 120, condition: () => ( qigong_availability.IsBingXAvailable() )},
+        { key: "1", sleepAfter: 120, condition: () => ( qigong_availability.IsBing1Available() )},
+
         { key: "2", sleepAfter: 120 },
-        { key: "3", sleepAfter: 15, condition: () => ( common_availability.IsManaLess5() && qigong_availability.Is3Available() )},
+
+        { key: "r", sleepAfter: 120 },
+        { key: "f", sleepAfter: 120 },
+
     ]
 
 
@@ -120,9 +127,18 @@ QiGong2RTFPress() {
             continue
 
         if (action.key = 'c') {
+            SendInput "r"
+            Sleep 800
             SendInput("{" action.key "}")
             Sleep(action.sleepAfter)
             break
+        }
+
+        if (action.key = 'z') {
+            SendInput "t"
+            Sleep 800
+            SendInput("{" action.key "}")
+            Sleep(action.sleepAfter)
         }
 
         ; ControlSend("{" action.key "}", , BNSNEOWinTitle)

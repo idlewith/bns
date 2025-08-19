@@ -13,58 +13,6 @@ global ToggleF := 0
 ; 挂机点左键
 global ToggleMouseLeft := 0
 
-; 检查蓝满月价格
-global ToggleCheckBlueTab := 0
-
-; 检查价格
-ToggleCheckPrice() {
-    global ToggleCheckBlueTab := !ToggleCheckBlueTab
-
-    if (ToggleCheckBlueTab)
-    {
-        SetTimer CheckBladeTabPrice, 2000
-        ToolTip "正在检查价格...", 1332, 644
-    }
-    else
-    {
-        SetTimer CheckBladeTabPrice, 0
-        SetTimer ToolTip, -500
-    }
-}
-
-
-
-; 检查蓝满月价格
-CheckBladeTabPrice() {
-
-    Sleep 1000
-    WinActivate BNSNEOWinTitle
-    Sleep 1000
-
-    SelectedBlueBladeTabResult := ClickImage("C:\code\bns\image\tab_selected.png", "选中的蓝满月")  
-    Sleep 500
-    if SelectedBlueBladeTabResult.IsClick {
-        MouseClick "left", SelectedBlueBladeTabResult.X + 5, SelectedBlueBladeTabResult.Y + 5
-        Sleep 50
-        MouseClick "left", SelectedBlueBladeTabResult.X + 5, SelectedBlueBladeTabResult.Y + 5
-    }
-    Sleep 1000
-
-    NotSelectedBlueBladeTabResult := ClickImage("C:\code\bns\image\tab_not_selected.png", "没选中的蓝满月") 
-    Sleep 500
-    if NotSelectedBlueBladeTabResult.IsClick {
-        MouseClick "left", NotSelectedBlueBladeTabResult.X + 5, NotSelectedBlueBladeTabResult.Y + 5
-        Sleep 50
-        MouseClick "left", NotSelectedBlueBladeTabResult.X + 5, NotSelectedBlueBladeTabResult.Y + 5
-    }
-    Sleep 1000
-
-    HoldMouseLeft()
-    Sleep 500
-    HoldMouseLeft()
-}
-
-
 
 ; 挂机打怪并捡东西
 ToggleQiGongKillBossAndPickThing() {
@@ -111,10 +59,8 @@ ToggleCard() {
 
     if (ToggleF)
     {
-        SetTimer PressF, 65
-        SetTimer PressF, 125
-        SetTimer PressF, 185
-        ; ToolTip "正在按住F...", 1332, 644
+        SetTimer PressF, 75
+        ToolTip "正在按住F...", 1332, 644
     }
     else
     {
@@ -161,6 +107,15 @@ PressF() {
     ; Sleep 70
 }
 
+PressF1() {
+    ControlSend "{f}", , BNSNEOWinTitle
+    ; Sleep 70
+}
+
+PressF2() {
+    ControlSend "{f}", , BNSNEOWinTitle
+    ; Sleep 70
+}
 
 
 

@@ -54,7 +54,7 @@ calculateReminderTime(eventTime) {
     
     ; 减去10分钟
     ; 10
-    totalMinutes := hour * 60 + minute - 6
+    totalMinutes := hour * 60 + minute - 10
     
     ; 处理跨小时计算
     newHour := Floor(totalMinutes / 60)

@@ -2,6 +2,7 @@
 
 ; 剑灵进程名
 BNSNEOWinTitle := "ahk_exe BNSR.exe"
+WeixinWinTitle := "ahk_exe Weixin.exe"
 BNSZSTitle := "ahk_exe 剑灵小助手.exe"
 
 
@@ -20,6 +21,7 @@ AdditionalBNSZSCheck := "剑灵小助手客户端签到"
 AdditionalMouseLeftClick := "点击左键"
 AdditionalCheckPrice := "检查价格"
 ActivityLeftMoudeEnter := "活动左键-enter领取材料"
+CheckPrice := "检查价格"
 
 
 
@@ -83,14 +85,12 @@ zhuMoLingData := Map(
         {time: "21:52", locations: ["黑森林", "灰狼村"]}
     ],
     "周日", [
-        {time: "02:56", locations: ["海岸客栈", "灰狼村"]},
-        {time: "04:56", locations: ["巨岩谷", "悲鸣村"]},
-        {time: "06:32", locations: ["烈沙/孤村", "未知"]},
-        {time: "10:05", locations: ["天狼陵", "未知"]},
-        {time: "12:33", locations: ["鬼都", "白雾森林"]},
-        {time: "14:47", locations: ["鬼都", "天狼陵"]},
-        {time: "17:11", locations: ["白雾森林", "黑森林"]},
-        {time: "21:10", locations: ["海岸客栈", "灰狼村"]}
+        {time: "02:38", locations: ["黑森林", "悲鸣村"]},
+        {time: "04:21", locations: ["海岸客栈", "未知"]},
+        {time: "10:31", locations: ["巨岩谷", "灰狼村"]},
+        {time: "13:03", locations: ["悲鸣村", "天狼陵"]},
+        {time: "17:44", locations: ["土门客栈", "白雾森林"]},
+        {time: "22:26", locations: ["巨岩谷", "未知"]}
     ]
 )
 

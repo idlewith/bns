@@ -10,6 +10,7 @@
 #Include %A_ScriptDir%\lib\bns_file.ahk
 #Include %A_ScriptDir%\lib\bns_activity.ahk
 #Include %A_ScriptDir%\lib\bns_zhumoling.ahk
+#Include %A_ScriptDir%\lib\ocr_utils.ahk
 
 #MaxThreads 15
 #SingleInstance Force
@@ -18,6 +19,8 @@ CoordMode "ToolTip", "Screen"
 CoordMode "Pixel", "Screen"
 CoordMode "Mouse", "Screen"
 
+
+; 剑灵组队邀请按+
 
 ; 功能列表
 ; - ctrl v 在剑灵游戏里面粘贴字符串
@@ -65,6 +68,7 @@ altcDDL := myGui.Add(
         AdditionalMouseLeftClick,
         AdditionalCheckPrice,
         ActivityLeftMoudeEnter,
+        CheckPrice,
     ]
 )
 altcDDL.OnEvent("Change", saveConfig)
@@ -230,6 +234,8 @@ myGui.Show()
             ToggleCheckPrice()
         case ActivityLeftMoudeEnter:
             ToggleActivityLeftMouseEnter()
+        case CheckPrice:
+            ToggleCheckPrice()
         default:
             MsgBox "未知挂机事情"
     }
