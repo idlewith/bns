@@ -39,7 +39,16 @@ class BladeAvailability
 
     ; 剑士Tab是否暴击
     IsTabCriticalHit() {
-        return ColorDistance(PixelGetColor(123, 1268), "0xEF8E02") < 50
+        ; return ColorDistance(PixelGetColor(123, 1268), "0xEF8E02") < 50
+
+        ; 124 963 #EC8C00
+        return ColorDistance(PixelGetColor(124, 963), "0xEC8C00") < 50
+    }
+
+    ; 剑士仙风是否暴击
+    IsLeftCriticalHit() {
+        ; 93 925 #FF9700
+        return ColorDistance(PixelGetColor(93, 925), "0xFF9700") < 50
     }
 
     ; 剑士Tab是否暴击V2

@@ -98,18 +98,18 @@ TabRRPress() {
 
         ; 150
         ; { key: "t",  hold: false, sleepAfter: 90, condition: () => ( !common_availability.IsManaLess5() && blade_availability.IsTabCriticalHitV2() )},
-        { key: "t",  hold: false, sleepAfter: 90, condition: () => ( blade_availability.IsTabCriticalHitV2() )},
+        { key: "t",  hold: false, sleepAfter: 100, condition: () => ( ( blade_availability.IsTabCriticalHit() || blade_availability.IsLeftCriticalHit() ) && !common_availability.IsManaLess5() )},
 
         { key: "z",  hold: false, sleepAfter: 15, condition: () => ( common_availability.IsManaLess5() && blade_availability.IsZAvailable() )},
 
         { key: "3",  hold: false, sleepAfter: 15, condition: () => ( common_availability.IsManaLess5() && blade_availability.Is3Avaliable() )},
 
-        { key: "v",  hold: false, sleepAfter: 120, condition: () => ( common_availability.IsManaLess3() && blade_availability.IsOutVAvaliable() )},
-        { key: "v",  hold: false, sleepAfter: 15, condition: () => ( blade_availability.IsInVAvaliable() )},
+        ; { key: "v",  hold: false, sleepAfter: 120, condition: () => ( common_availability.IsManaLess3() && blade_availability.IsOutVAvaliable() )},
+        ; { key: "v",  hold: false, sleepAfter: 15, condition: () => ( blade_availability.IsInVAvaliable() )},
 
         { key: "2",  hold: false, sleepAfter: 5, condition: () => ( common_availability.IsManaLess5() && blade_availability.Is2Available() )},
 
-        { key: "``", hold: false, sleepAfter: 5, condition: () => common_availability.IsSoulStoneAvailable() },
+        ; { key: "``", hold: false, sleepAfter: 5, condition: () => common_availability.IsSoulStoneAvailable() },
     ]
 
 
@@ -145,6 +145,7 @@ TabRRPress() {
                 break
 
             Sleep(action.sleepAfter)
+            
         }
     }
 

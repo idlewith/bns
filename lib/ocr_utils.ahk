@@ -17,7 +17,7 @@ ToggleCheckPrice() {
 
     if (ToggleCheckRightPrice)
     {
-        SetTimer CheckRightPrice, 480000
+        SetTimer CheckRightPrice, 240000
         ToolTip "正在检查价格...", 1332, 644
     }
     else

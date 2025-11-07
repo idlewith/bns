@@ -66,7 +66,7 @@ BNSClientDailyAttendance() {
     ; Sleep 3000
 
 
-    Found1QQResult := ClickImage("*100 C:\code\bns\image\1.png", "登录界面的1号QQ")
+    Found1QQResult := ClickImage("*100 C:\code\bns\image\1.png", "登录界面的1号QQ-OUT")
     Sleep 500
     if Found1QQResult.IsClick {
         MouseClick "left", Found1QQResult.X + 5, Found1QQResult.Y + 5
@@ -75,7 +75,7 @@ BNSClientDailyAttendance() {
 
 
     ; 后面都是在主窗口
-    Found1QQLoginedResult := ClickImage("*100 C:\code\bns\image\1-2.png", "登录后的1号QQ头像")
+    Found1QQLoginedResult := ClickImage("*100 C:\code\bns\image\1-2.png", "登录后的1号QQ头像-OUT")
     Sleep 500  
     if Found1QQLoginedResult.IsClick {
         MouseClick "right", Found1QQLoginedResult.X + 5, Found1QQLoginedResult.Y + 5
@@ -83,7 +83,7 @@ BNSClientDailyAttendance() {
     Sleep 500
 
 
-    FoundMarkResult := ClickImage("C:\code\bns\image\mark.png", "签到选项")
+    FoundMarkResult := ClickImage("C:\code\bns\image\mark.png", "签到选项-OUT")
     Sleep 500
     if FoundMarkResult.IsClick {
         MouseClick "left", FoundMarkResult.X + 5, FoundMarkResult.Y + 5
@@ -91,14 +91,14 @@ BNSClientDailyAttendance() {
     Sleep 500
 
 
-    MarkOKResult := ClickImage("C:\code\bns\image\mark_ok.png", "签到OK按钮")
+    MarkOKResult := ClickImage("C:\code\bns\image\mark_ok.png", "签到OK按钮-OUT")
     Sleep 500
     if MarkOKResult.IsClick {
         MouseClick "left", MarkOKResult.X + 5, MarkOKResult.Y + 5
     }
     Sleep 500
 
-    FoundTitleResult := ClickImage("C:\code\bns\image\title.png", "标签栏")
+    FoundTitleResult := ClickImage("C:\code\bns\image\title.png", "标签栏-OUT")
     Sleep 500
     if FoundTitleResult.IsClick {
         MouseClick "left", FoundTitleResult.X + 5, FoundTitleResult.Y + 5
@@ -107,27 +107,34 @@ BNSClientDailyAttendance() {
 
 
     ; 后面都是在主窗口
-    Found1QQLoginedResult := ClickImage("*50 C:\code\bns\image\1-2.png", "登录后的1号QQ头像")
+    Found1QQLoginedResult := ClickImage("*50 C:\code\bns\image\1-2.png", "登录后的1号QQ头像-OUT")
     Sleep 500  
     if Found1QQLoginedResult.IsClick {
         MouseClick "left", Found1QQLoginedResult.X + 5, Found1QQLoginedResult.Y + 5
         Sleep 500
 
-        QuitResult := ClickImage("*50 C:\code\bns\image\quit.png", "")
+        QuitResult := ClickImage("*50 C:\code\bns\image\quit.png", "退出账号-IN")
         Sleep 500
         if QuitResult.IsClick {
             MouseClick "left", QuitResult.X + 5, QuitResult.Y + 5
         }
         Sleep 2000
 
-        Found1QQResult := ClickImage("*100 C:\code\bns\image\1.png", "登录界面的1号QQ")
+        MarkOKResult := ClickImage("C:\code\bns\image\mark_ok.png", "签到OK按钮-IN")
+        Sleep 500
+        if MarkOKResult.IsClick {
+            MouseClick "left", MarkOKResult.X + 5, MarkOKResult.Y + 5
+        }
+        Sleep 500
+
+        Found1QQResult := ClickImage("*100 C:\code\bns\image\1.png", "登录界面的1号QQ-IN")
         Sleep 500
         if Found1QQResult.IsClick {
             MouseClick "left", Found1QQResult.X + 5, Found1QQResult.Y + 5
         }
         Sleep 3000
 
-        Found1QQLoginedResult := ClickImage("C:\code\bns\image\1-2.png", "登录后的1号QQ头像")
+        Found1QQLoginedResult := ClickImage("C:\code\bns\image\1-2.png", "登录后的1号QQ头像-IN")
         Sleep 500  
         if Found1QQLoginedResult.IsClick {
             MouseClick "right", Found1QQLoginedResult.X + 5, Found1QQLoginedResult.Y + 5
@@ -135,7 +142,7 @@ BNSClientDailyAttendance() {
         Sleep 500
 
 
-        FoundMarkResult := ClickImage("C:\code\bns\image\mark.png", "签到选项")
+        FoundMarkResult := ClickImage("C:\code\bns\image\mark.png", "签到选项-IN")
         Sleep 500
         if FoundMarkResult.IsClick {
             MouseClick "left", FoundMarkResult.X + 5, FoundMarkResult.Y + 5
@@ -143,14 +150,14 @@ BNSClientDailyAttendance() {
         Sleep 500
 
 
-        MarkOKResult := ClickImage("C:\code\bns\image\mark_ok.png", "签到OK按钮")
+        MarkOKResult := ClickImage("C:\code\bns\image\mark_ok.png", "签到OK按钮-IN")
         Sleep 500
         if MarkOKResult.IsClick {
             MouseClick "left", MarkOKResult.X + 5, MarkOKResult.Y + 5
         }
         Sleep 500
 
-        FoundTitleResult := ClickImage("C:\code\bns\image\title.png", "标签栏")
+        FoundTitleResult := ClickImage("C:\code\bns\image\title.png", "标签栏-IN")
         Sleep 500
         if FoundTitleResult.IsClick {
             MouseClick "left", FoundTitleResult.X + 5, FoundTitleResult.Y + 5

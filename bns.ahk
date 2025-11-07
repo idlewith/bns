@@ -250,22 +250,17 @@ CheckTime() {
     currentTimeHourMinute := FormatTime(A_Now, "HHmm") ; 获取当前时间，格式为 HHmm（24 小时制）
     currentTimeYearMonthDayHourMinute := FormatTime(A_Now, "yyMMddHHmm") ; 获取当前时间，格式为 yyMMddHHmm (24 小时制）
     
-    ; 如果当前时间是 2335 0005 ，剑灵小助手打卡
-    if (currentTimeHourMinute = "2355") {
-        BNSClientDailyAttendance()
-    }
-
+    ; 如果当前时间是 0005 ，剑灵小助手打卡
     if (currentTimeHourMinute = "0005") {
         BNSClientDailyAttendance()
     }
 
     ; 如果当前时间是 202504220057，领取B币券
-    if (currentTimeYearMonthDayHourMinute = "2508242301") {
+    if (currentTimeYearMonthDayHourMinute = "2511242301") {
         BiliBiliMonthlyCoin()
         
     }
 
-    reportZhumoling()
 }
 
 ; 设置定时器，每分钟检查一次时间
