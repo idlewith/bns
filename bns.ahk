@@ -11,6 +11,7 @@
 #Include %A_ScriptDir%\lib\bns_activity.ahk
 #Include %A_ScriptDir%\lib\bns_zhumoling.ahk
 #Include %A_ScriptDir%\lib\ocr_utils.ahk
+#Include %A_ScriptDir%\lib\bns_hotstr.ahk
 
 #MaxThreads 15
 #SingleInstance Force
